@@ -16,6 +16,7 @@ public class GUIOverlay : MonoBehaviour
 	MovieClip defend_button;
 	MovieClip magic_button;
 	MovieClip wait_button;
+	MovieClip move_button;
 	void Start ()
 	{
         
@@ -29,6 +30,7 @@ public class GUIOverlay : MonoBehaviour
         
 		//bottom timeline
 		menu = new MovieClip ("Flash GUI/game_gui.swf:hover_menu");
+		move_button = (MovieClip)menu.getChildByName ("move_btn");
 		attack_button = (MovieClip)menu.getChildByName ("attack_btn");
 		defend_button = (MovieClip)menu.getChildByName ("defend_btn");
 		magic_button = (MovieClip)menu.getChildByName ("magic_btn");
@@ -42,7 +44,7 @@ public class GUIOverlay : MonoBehaviour
 		buttonList.Add (defend_button);
 		buttonList.Add (magic_button);
 		buttonList.Add (wait_button);
-
+		buttonList.Add (move_button);
 		menu.x = 500;
 		menu.y = 500;
 		
