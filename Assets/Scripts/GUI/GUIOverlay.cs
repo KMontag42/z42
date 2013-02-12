@@ -41,6 +41,10 @@ public class GUIOverlay : MonoBehaviour
 		wait_button = (MovieClip)menu.getChildByName ("wait_btn");
 		
 		move_button.addEventListener(MouseEvent.CLICK, onMoveButton);
+		attack_button.addEventListener(MouseEvent.CLICK, onAttackButton);
+		defend_button.addEventListener(MouseEvent.CLICK, onDefendButton);
+		magic_button.addEventListener(MouseEvent.CLICK, onSpellButton);
+		wait_button.addEventListener(MouseEvent.CLICK, onWaitButton);		
 		
 		//create a list and store buttons in list
 		buttonList = new List<MovieClip> ();
@@ -107,6 +111,30 @@ public class GUIOverlay : MonoBehaviour
 		StartCoroutine(selected_player.Move());
 		// alert player unit that it is being moved
 		// display move range
+	}
+	
+	void onAttackButton(CEvent e)
+	{
+		menu.visible = false;
+		StartCoroutine(selected_player.Attack());
+	}
+	
+	void onDefendButton(CEvent e)
+	{
+		menu.visible = false;
+		StartCoroutine(selected_player.Defend());
+	}
+	
+	void onSpellButton(CEvent e)
+	{
+		menu.visible = false;
+		StartCoroutine(selected_player.Spell());
+	}
+	
+	void onWaitButton(CEvent e)
+	{
+		menu.visible = false;
+		StartCoroutine(selected_player.Wait());
 	}
 	
 	void updateListeners (List<MovieClip> list)
