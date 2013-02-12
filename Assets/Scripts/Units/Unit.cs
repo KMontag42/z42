@@ -43,6 +43,7 @@ private
 	{
 		print ("moving");
 		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		indicator.transform.localScale = new Vector3(2,2,2);
 		Vector3 mouse_input = new Vector3(0,0,0);
 		Vector3 target_destination = new Vector3(0,0,0);
 		bool ready_to_move = false;
@@ -79,6 +80,7 @@ private
 	{
 		print ("attacking");
 		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		indicator.transform.localScale = new Vector3(.85f,.85f,.85f);
 		Vector3 mouse_input = new Vector3(0,0,0);
 		Vector3 target_destination = new Vector3(0,0,0);
 		bool ready_to_attack = false;
@@ -149,6 +151,7 @@ private
 		print ("casting spell");
 		// change based on type of spell
 		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		indicator.transform.localScale = new Vector3(3,3,3);
 		Vector3 mouse_input = new Vector3(0,0,0);
 		Vector3 target_destination = new Vector3(0,0,0);
 		bool ready_to_cast = false;
@@ -226,6 +229,7 @@ private
 			if (playerPlane.Raycast(ray, out hitdist)) {
 				transform.LookAt(ray.GetPoint(hitdist), Vector3.up);
 				indicator.transform.LookAt(ray.GetPoint(hitdist), Vector3.up);
+				indicator.transform.Rotate(90,0,0);
 				if (Input.GetMouseButton(0))
 				{
 					input_recieved = true;
