@@ -6,11 +6,9 @@ public class Unit : MonoBehaviour
 {
     #region Fields
 private
-	float strength;
-	float intelligence;
-	float dexterity;
-	float vitality;
 	float move_range;
+	float attack_range;
+	GameObject indicator;
     #endregion
 	
 	
@@ -18,11 +16,8 @@ private
     #region Methods
     // Use this for initialization
 	public virtual void Start () {
-		strength = 10;
-		intelligence = 10;
-		dexterity = 10;
-		vitality = 10;
-		move_range = 20;
+		move_range = 5;
+		attack_range = 3;
 	}
 	
 	// Update is called once per frame
@@ -34,6 +29,11 @@ private
 	
 	public virtual void OnMouseDown()
 	{
+		ShowMenu();
+	}
+	
+	public void ShowMenu()
+	{
 		Camera camera_3d = Camera.allCameras[0];
 		Vector3 pos = camera_3d.WorldToScreenPoint(transform.position);
 		GUIOverlay.showTooltip(this, pos.x, Screen.height - pos.y);
@@ -42,7 +42,7 @@ private
 	public IEnumerator Move ()
 	{
 		print ("moving");
-		GameObject indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
 		Vector3 mouse_input = new Vector3(0,0,0);
 		Vector3 target_destination = new Vector3(0,0,0);
 		bool ready_to_move = false;
@@ -57,9 +57,14 @@ private
  
 			if (playerPlane.Raycast(ray, out hitdist)) {
 				target_destination = ray.GetPoint(hitdist);
-				Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
-				transform.rotation = targetRotation;
-				ready_to_move = true;
+				print (Vector3.Distance(transform.position, target_destination));
+				if (Vector3.Distance(transform.position, target_destination) <= move_range)
+				{
+					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
+					transform.rotation = targetRotation;
+					ready_to_move = true;	
+				}
+				
 			}
 			
 		} while (!ready_to_move);
@@ -70,16 +75,163 @@ private
 		yield return StartCoroutine(MoveTo (target_destination, 1));
 	}
 	
+	public IEnumerator Attack ()
+	{
+		print ("attacking");
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		Vector3 mouse_input = new Vector3(0,0,0);
+		Vector3 target_destination = new Vector3(0,0,0);
+		bool ready_to_attack = false;
+		do
+		{
+			yield return StartCoroutine(GetInput());
+			mouse_input = Input.mousePosition;
+			
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
+			float hitdist = 0.0f;
+ 
+			if (playerPlane.Raycast(ray, out hitdist)) {
+				target_destination = ray.GetPoint(hitdist);
+				print (Vector3.Distance(transform.position, target_destination));
+				if (Vector3.Distance(transform.position, target_destination) <= attack_range)
+				{
+					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
+					transform.rotation = targetRotation;
+					ready_to_attack = true;	
+				}
+				
+			}
+			
+		} while (!ready_to_attack);
+		print ("attacked");
+		print (target_destination);
+		Destroy(indicator);
+		
+		yield return null;
+	}
+	
+	public IEnumerator Defend ()
+	{
+		print ("defending");
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		Vector3 mouse_input = new Vector3(0,0,0);
+		Vector3 target_destination = new Vector3(0,0,0);
+		bool ready_to_defend = false;
+		do
+		{
+			yield return StartCoroutine(GetInput());
+			mouse_input = Input.mousePosition;
+			
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
+			float hitdist = 0.0f;
+ 
+			if (playerPlane.Raycast(ray, out hitdist)) {
+				target_destination = ray.GetPoint(hitdist);
+				print (Vector3.Distance(transform.position, target_destination));
+				Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
+				transform.rotation = targetRotation;
+				ready_to_defend = true;
+				
+			}
+			
+		} while (!ready_to_defend);
+		print ("defended");
+		print (target_destination);
+		Destroy(indicator);
+		
+		yield return null;
+	}
+	
+	public IEnumerator Spell ()
+	{
+		print ("casting spell");
+		// change based on type of spell
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		Vector3 mouse_input = new Vector3(0,0,0);
+		Vector3 target_destination = new Vector3(0,0,0);
+		bool ready_to_cast = false;
+		do
+		{
+			yield return StartCoroutine(GetInput());
+			mouse_input = Input.mousePosition;
+			
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
+			float hitdist = 0.0f;
+ 
+			if (playerPlane.Raycast(ray, out hitdist)) {
+				target_destination = ray.GetPoint(hitdist);
+				print (Vector3.Distance(transform.position, target_destination));
+				if (Vector3.Distance(transform.position, target_destination) <= attack_range)
+				{
+					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
+					transform.rotation = targetRotation;
+					ready_to_cast = true;	
+				}
+				
+			}
+			
+		} while (!ready_to_cast);
+		print ("spell casted");
+		print (target_destination);
+		Destroy(indicator);
+		
+		yield return null;
+	}
+	
+	public IEnumerator Wait ()
+	{
+		print ("waiting");
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		Vector3 mouse_input = new Vector3(0,0,0);
+		Vector3 target_destination = new Vector3(0,0,0);
+		bool ready_to_wait = false;
+		do
+		{
+			yield return StartCoroutine(GetInput());
+			mouse_input = Input.mousePosition;
+			
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
+			float hitdist = 0.0f;
+ 
+			if (playerPlane.Raycast(ray, out hitdist)) {
+				target_destination = ray.GetPoint(hitdist);
+				print (Vector3.Distance(transform.position, target_destination));
+				Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
+				transform.rotation = targetRotation;
+				ready_to_wait = true;
+			}
+			
+		} while (!ready_to_wait);
+		print ("waited");
+		print (target_destination);
+		Destroy(indicator);
+		
+		yield return null;
+	}
+	
 	public IEnumerator GetInput()
 	{
 		bool input_recieved = false;
 		
 		while (!input_recieved) 
 		{
-			if (Input.GetMouseButton(0))
-			{
-				input_recieved = true;
-				yield return null;	
+			Plane playerPlane = new Plane(Vector3.up, transform.position);
+			Ray ray = Camera.allCameras[0].ScreenPointToRay(Input.mousePosition);
+			float hitdist = 0.0f;
+ 
+			if (playerPlane.Raycast(ray, out hitdist)) {
+				transform.LookAt(ray.GetPoint(hitdist), Vector3.up);
+				indicator.transform.LookAt(ray.GetPoint(hitdist), Vector3.up);
+				if (Input.GetMouseButton(0))
+				{
+					input_recieved = true;
+					yield return null;	
+				}
+				yield return null;
 			}
 			yield return null;
 		}
@@ -99,12 +251,6 @@ private
 			yield return null;
 		}
 		transform.position = end;
-	}
-	
-	public virtual Unit[] FindNeighbors(int range) {
-		List<Unit> a = new List<Unit>();
-		a.Add(this);
-		return a.ToArray();
 	}
     #endregion
 	
