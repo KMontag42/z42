@@ -14,6 +14,7 @@ public class GUIOverlay : MonoBehaviour
 		Stage stage;
 		List<MovieClip> buttonList;
 		static MovieClip menu;
+		MovieClip move_button;
 		MovieClip attack_button;
 		MovieClip defend_button;
 		MovieClip magic_button;
@@ -32,6 +33,7 @@ public class GUIOverlay : MonoBehaviour
         
 		//bottom timeline
 		menu = new MovieClip ("Flash GUI/game_gui.swf:hover_menu");
+		move_button = (MovieClip)menu.getChildByName ("move_btn");
 		attack_button = (MovieClip)menu.getChildByName ("attack_btn");
 		defend_button = (MovieClip)menu.getChildByName ("defend_btn");
 		magic_button = (MovieClip)menu.getChildByName ("magic_btn");
@@ -39,6 +41,7 @@ public class GUIOverlay : MonoBehaviour
 		
 		//create a list and store buttons in list
 		buttonList = new List<MovieClip> ();
+		buttonList.Add (move_button);
 		buttonList.Add (attack_button);
 		buttonList.Add (defend_button);
 		buttonList.Add (magic_button);
