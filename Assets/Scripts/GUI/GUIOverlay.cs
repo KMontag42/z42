@@ -19,6 +19,7 @@ public class GUIOverlay : MonoBehaviour
 		MovieClip defend_button;
 		MovieClip magic_button;
 		MovieClip wait_button;
+		static Unit selected_player;
 	
 	void Start ()
 	{
@@ -38,6 +39,8 @@ public class GUIOverlay : MonoBehaviour
 		defend_button = (MovieClip)menu.getChildByName ("defend_btn");
 		magic_button = (MovieClip)menu.getChildByName ("magic_btn");
 		wait_button = (MovieClip)menu.getChildByName ("wait_btn");
+		
+		move_button.addEventListener(MouseEvent.CLICK, onMoveButton);
 		
 		//create a list and store buttons in list
 		buttonList = new List<MovieClip> ();
@@ -65,8 +68,9 @@ public class GUIOverlay : MonoBehaviour
 
 	}
 
-	public static void showTooltip (float x, float y)
+	public static void showTooltip (Unit s_player, float x, float y)
 	{
+		selected_player = s_player;
 		menu.visible = true;
 		menu.x = x;
 		menu.y = y;
@@ -94,6 +98,15 @@ public class GUIOverlay : MonoBehaviour
 	{
 		MovieClip m = e.currentTarget as MovieClip;
 		m.gotoAndStop ("static");		
+	}
+	
+	void onMoveButton(CEvent e)
+	{
+		menu.visible = false;
+		print (selected_player);
+		StartCoroutine(selected_player.Move());
+		// alert player unit that it is being moved
+		// display move range
 	}
 	
 	void updateListeners (List<MovieClip> list)

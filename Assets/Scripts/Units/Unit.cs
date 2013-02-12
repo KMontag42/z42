@@ -25,7 +25,40 @@ public class Unit : MonoBehaviour
 	{
 		Camera camera_3d = Camera.allCameras[0];
 		Vector3 pos = camera_3d.WorldToScreenPoint(transform.position);
-		GUIOverlay.showTooltip(pos.x, pos.y);
+		GUIOverlay.showTooltip(this, pos.x, pos.y);
+	}
+	
+	public IEnumerator Move ()
+	{
+		print ("moving");
+		GameObject indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		Vector3 mouse_input = new Vector3(0,0,0);
+		bool ready_to_move = false;
+		do
+		{
+			yield return StartCoroutine(GetInput());
+			mouse_input = Input.mousePosition;
+			ready_to_move = true;
+		} while (!ready_to_move);
+		print ("moved");
+		print (mouse_input);
+		Destroy(indicator);
+		yield return null;
+	}
+	
+	public IEnumerator GetInput()
+	{
+		bool input_recieved = false;
+		
+		while (!input_recieved) 
+		{
+			if (Input.GetMouseButton(0))
+			{
+				input_recieved = true;
+				yield return null;	
+			}
+			yield return null;
+		}
 	}
 	
     public virtual IEnumerator MoveTo (Vector3 pos, float t)
