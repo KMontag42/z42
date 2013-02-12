@@ -1,0 +1,17 @@
+<unit>
+	<name>Generic</name>
+	<class>Generic</class>
+	<cost>500</cost>
+	<possible_upgrades>
+		<upgrade>
+			<type>Item</type>
+			<name>Generic</name>
+			<cost>500</cost>
+		</upgrade>
+		<upgrade>
+			<type>Spell</type>
+			<name>Generic</name>
+			<cost>1000</cost>
+		</upgrade>
+	</possible_upgrades>
+</unit>

@@ -1,0 +1,11 @@
+<class>
+	<name>Generic</name>	
+	<stats>
+		<str>10</str>
+		<int>10</int>
+		<dex>10</dex>
+		<vit>10</vit>
+	</stats>
+	<spells></spells>
+	<upgrades></upgrades>
+</class>

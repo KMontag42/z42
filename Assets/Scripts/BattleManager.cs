@@ -11,32 +11,7 @@ public class BattleManager : MonoBehaviour {
 	
 	private static int CompareBySpeed(Unit x, Unit y)
 	{		
-		if (x == null) {
-			if (y == null) {
-				return 0;
-			}
-			else {
-				return -1;
-			}
-		}
-		else {
-			if (y == null) {
-				return 1;
-			}
-			else {
-				//bool eq = x.stats[4].ModValue == y.stats[4].ModValue;
-				
-				if (x.Stats[4].ModValue > y.Stats[4].ModValue) {
-					return 1;
-				}
-				else if (y.Stats[4].ModValue > x.Stats[4].ModValue) {
-					return -1;
-				}
-				else {
-					return 0;
-				}
-			}
-		}
+		return 0;
 	}
 	
 	void Start() {}

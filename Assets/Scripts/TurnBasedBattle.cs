@@ -33,37 +33,23 @@ public class TurnBasedBattle : MonoBehaviour {
 			Unit _unit = turnOrder[curUnit];
 			
 			if (_unit.tag == "Player") {
-				if(_unit.CurrentVitals[0] > 0) {
-	           	 	yield return StartCoroutine(PlayerTurn());
+				turnOrder.RemoveAt(curUnit);
+				Destroy(_unit.gameObject);
+				foreach(Unit u in turnOrder) {
+					bm.EndBattle();
 				}
-				else {
-					turnOrder.RemoveAt(curUnit);
-					Destroy(_unit.gameObject);
-					foreach(Unit u in turnOrder) {
-						u.pGUI.InBattle = false;
-						u.pGUI.ActiveTurn = false;
-						u.pGUI.UnitClicked = null;
-						u.pGUI.IsUnitClicked = false;
-						bm.EndBattle();
-					}
-					Debug.Log("battle ended");
-					break;
-				}
+				Debug.Log("battle ended");
+				break;
 			}
 			
 			else if (_unit.tag == "Enemy") {
-				if(_unit.CurrentVitals[0] > 0) {
-	           	 	yield return StartCoroutine(EnemyTurn());
+				turnOrder.RemoveAt(curUnit);
+				Destroy(_unit.gameObject);
+				foreach(Unit u in turnOrder) {
+					bm.EndBattle();
 				}
-				else {
-					turnOrder.RemoveAt(curUnit);
-					Destroy(_unit.gameObject);
-					foreach(Unit u in turnOrder) {
-						bm.EndBattle();
-					}
-					Debug.Log("battle ended");
-					break;
-				}
+				Debug.Log("battle ended");
+				break;
 			}
 		
             //Do enemy loop, finish, restart loop
@@ -79,9 +65,6 @@ public class TurnBasedBattle : MonoBehaviour {
     IEnumerator PlayerTurn() {
 		Debug.Log("player turn");
         activePlayerTargets = null;
-		turnOrder[curUnit].pGUI.ActiveTurn = true;
-		turnOrder[curUnit].pGUI.SelectedSpell = null;
-		turnOrder[curUnit].pGUI.UnitClicked = null;
 		activePlayerSpell = null;
         //This could be placed in a higher scope for memory purposes.
 
@@ -109,10 +92,6 @@ public class TurnBasedBattle : MonoBehaviour {
 
         if(playerTurnEnded != null) 
             playerTurnEnded(tI);
-		
-		turnOrder[curUnit].pGUI.ActiveTurn = false;
-		turnOrder[curUnit].pGUI.SelectedSpell = null;
-		turnOrder[curUnit].pGUI.UnitClicked = null;
     }
 
     IEnumerator EnemyTurn() {

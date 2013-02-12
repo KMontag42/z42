@@ -1,0 +1,6 @@
+<spell>
+	<name>Generic</name>
+	<cost>10</cost>
+	<range>10</range>
+	<type>s_passive</type>
+</spell>

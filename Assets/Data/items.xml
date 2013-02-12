@@ -1,0 +1,9 @@
+<item>
+	<name>Generic</name>
+	<slot>1h</slot>
+	<stats>
+		<str>10</str>
+	</stats>
+	<upgrade_cost></upgrade_cost>
+	<useable_by></useable_by>
+</item>
