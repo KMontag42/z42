@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class Unit : MonoBehaviour
 {
     #region Fields
-private
+public
 	enum ACTIONS { MOVE, ATTACK, DEFEND, SPELL, WAIT };
-	float move_range;
-	float attack_range;
+private
+	int move_range;
+	int attack_range;
 	GameObject indicator;
 	bool menu_showing = false;
 	bool turn_started = false;
@@ -32,7 +33,7 @@ private
 	}
 	
 	public void start_turn() {
-		current_ap = 2;
+		current_ap = action_points;
 		turn_started = true;
 	}
 	
@@ -75,10 +76,13 @@ private
 		{
 			case ACTIONS.MOVE:
 				action_range = move_range;
+				break;
 			case ACTIONS.ATTACK:
 				action_range = attack_range;
+				break;
 			default:
 				action_range = 100;
+				break;
 		}
 				
 		
@@ -111,7 +115,13 @@ private
 		if (action == ACTIONS.MOVE)
 			yield return StartCoroutine(move_to (target_destination, 1));
 		else
+		{
+			if (current_ap > 0)
+			{
+				show_menu();	
+			}
 			yield return null;
+		}
 	}
 	
 	public IEnumerator get_input()
@@ -153,6 +163,10 @@ private
 			yield return null;
 		}
 		transform.position = end;
+		if (current_ap > 0)
+		{
+			show_menu();	
+		}
 	}
     #endregion
 	

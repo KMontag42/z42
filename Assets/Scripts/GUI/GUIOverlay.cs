@@ -108,7 +108,7 @@ public class GUIOverlay : MonoBehaviour
 	{
 		menu.visible = false;
 		print (selected_player);
-		StartCoroutine(selected_player.Move());
+		StartCoroutine(selected_player.do_action("ground_indicator", Unit.ACTIONS.MOVE));
 		// alert player unit that it is being moved
 		// display move range
 	}
@@ -116,25 +116,25 @@ public class GUIOverlay : MonoBehaviour
 	void onAttackButton(CEvent e)
 	{
 		menu.visible = false;
-		StartCoroutine(selected_player.Attack());
+		StartCoroutine(selected_player.do_action("range_indicator", Unit.ACTIONS.ATTACK));
 	}
 	
 	void onDefendButton(CEvent e)
 	{
 		menu.visible = false;
-		StartCoroutine(selected_player.Defend());
+		StartCoroutine(selected_player.do_action("ground_indicator", Unit.ACTIONS.DEFEND));
 	}
 	
 	void onSpellButton(CEvent e)
 	{
 		menu.visible = false;
-		StartCoroutine(selected_player.Spell());
+		StartCoroutine(selected_player.do_action("healing_indicator", Unit.ACTIONS.SPELL));
 	}
 	
 	void onWaitButton(CEvent e)
 	{
 		menu.visible = false;
-		StartCoroutine(selected_player.Wait());
+		StartCoroutine(selected_player.do_action("range_indicator", Unit.ACTIONS.WAIT));
 	}
 	
 	void updateListeners (List<MovieClip> list)

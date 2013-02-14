@@ -7,7 +7,7 @@ public class BattleManager : MonoBehaviour {
 public	
 	List<Unit> combatants = new List<Unit>();
 	List<Unit> turn_order = new List<Unit>();
-	bool InBattle = false;
+	bool in_battle = false;
 private
 	int current_unit_index = 0;
 	
@@ -27,8 +27,8 @@ private
 	public void init(List<Unit> c)
 	{
 		combatants = c;
-		OrderTurns();
-		InBattle = true;
+		order_turns();
+		in_battle = true;
 		gameObject.AddComponent((typeof (TurnBasedBattle)));
 	}
 	
@@ -52,7 +52,7 @@ private
 	
 	public void end_battle() {
 		Component.Destroy(gameObject.GetComponent((typeof (TurnBasedBattle))));
-		InBattle = false;
+		in_battle = false;
 		combatants.Clear();
 		turn_order.Clear();
 	}

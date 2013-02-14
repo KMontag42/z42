@@ -20,16 +20,17 @@ public class TurnBasedBattle : MonoBehaviour {
     // Update is called once per frame
     IEnumerator update_state () {
 		Debug.Log("battle started");
-		Debug.Log(bm.turnOrder.Count);
         for(;;) {
         //This is short hand for infinity loop.  Same as while(true).
-			Debug.Log("new state with :" +curUnit);
+			Debug.Log("new state with :" +bm.current_unit);
 			
 			if (bm.current_unit.tag == "Player")
 			{
 				yield return StartCoroutine(player_turn (bm.current_unit));
+				break;
 			} else if (bm.current_unit.tag == "Enemy") {
 				yield return StartCoroutine(enemy_turn(bm.current_unit));
+				break;
 			}
 			
 			bm.next_unit();
@@ -47,7 +48,7 @@ public class TurnBasedBattle : MonoBehaviour {
 		
 		u.start_turn();
 		
-		while (u.HasCurrentTurn)
+		while (u.has_current_turn)
 		{
 			
 		}
@@ -56,6 +57,8 @@ public class TurnBasedBattle : MonoBehaviour {
 
         if(player_turn_ended != null) 
             player_turn_ended(tI);
+		
+		yield return null;
     }
 
     IEnumerator enemy_turn(Unit u) {
@@ -66,7 +69,7 @@ public class TurnBasedBattle : MonoBehaviour {
         
 		u.start_turn();
 		
-		while (u.HasCurrentTurn)
+		while (u.has_current_turn)
 		{
 			
 		}
@@ -75,6 +78,8 @@ public class TurnBasedBattle : MonoBehaviour {
 
         if(enemy_turn_ended != null) 
             enemy_turn_ended(tI);
+		
+		yield return null;
 
     }
 }
