@@ -6,50 +6,84 @@ public class Unit : MonoBehaviour
 {
     #region Fields
 private
+	enum ACTIONS { MOVE, ATTACK, DEFEND, SPELL, WAIT };
 	float move_range;
 	float attack_range;
 	GameObject indicator;
+	bool menu_showing = false;
+	bool turn_started = false;
+	int action_points;
+	int current_ap;
     #endregion
 	
-	
+	#region properties
+	public bool has_current_turn {
+		get { return (turn_started == true && current_ap > 0); }
+	}
+	#endregion
 	
     #region Methods
     // Use this for initialization
 	public virtual void Start () {
 		move_range = 5;
 		attack_range = 3;
+		action_points = 2;
+		current_ap = 0;
+	}
+	
+	public void start_turn() {
+		current_ap = 2;
+		turn_started = true;
 	}
 	
 	// Update is called once per frame
 	public virtual void FixedUpdate () {
-        
-		//unitMenuRect.x = Camera.main.WorldToScreenPoint(transform.position).x;
-		//unitMenuRect.y = Camera.main.WorldToScreenPoint(transform.position).y;
+		if (!menu_showing && turn_started && current_ap > 0)
+		{
+			show_menu();
+		}
+		if (turn_started && current_ap <= 0)
+		{
+			turn_started = false;
+			current_ap = 0;
+			menu_showing = false;
+		}
 	}
 	
-	public virtual void OnMouseDown()
+	public void show_menu()
 	{
-		ShowMenu();
+		if (!menu_showing)
+		{
+			Camera camera_3d = Camera.allCameras[0];
+			Vector3 pos = camera_3d.WorldToScreenPoint(transform.position);
+			GUIOverlay.showTooltip(this, pos.x, Screen.height - pos.y);
+			menu_showing = true;
+		}
 	}
 	
-	public void ShowMenu()
+	public IEnumerator do_action(string _ind, ACTIONS action) 
 	{
-		Camera camera_3d = Camera.allCameras[0];
-		Vector3 pos = camera_3d.WorldToScreenPoint(transform.position);
-		GUIOverlay.showTooltip(this, pos.x, Screen.height - pos.y);
-	}
-	
-	public IEnumerator Move ()
-	{
-		print ("moving");
-		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
+		print ("performing action");
+		indicator = GameObject.Instantiate(Resources.Load("Prefabs/"+_ind) as GameObject, transform.position, transform.rotation) as GameObject;
 		indicator.transform.localScale = new Vector3(2,2,2);
 		Vector3 mouse_input = new Vector3(0,0,0);
 		Vector3 target_destination = new Vector3(0,0,0);
-		bool ready_to_move = false;
-		do
+		bool performed_action = false;
+		int action_range;
+		
+		switch (action)
 		{
-			yield return StartCoroutine(GetInput());
+			case ACTIONS.MOVE:
+				action_range = move_range;
+			case ACTIONS.ATTACK:
+				action_range = attack_range;
+			default:
+				action_range = 100;
+		}
+				
+		
+		do {
+			yield return StartCoroutine(get_input());
 			mouse_input = Input.mousePosition;
 			
 			Plane playerPlane = new Plane(Vector3.up, transform.position);
@@ -59,164 +93,28 @@ private
 			if (playerPlane.Raycast(ray, out hitdist)) {
 				target_destination = ray.GetPoint(hitdist);
 				print (Vector3.Distance(transform.position, target_destination));
-				if (Vector3.Distance(transform.position, target_destination) <= move_range)
+				if (Vector3.Distance(transform.position, target_destination) <= action_range)
 				{
 					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
 					transform.rotation = targetRotation;
-					ready_to_move = true;	
+					performed_action = true;	
 				}
-				
 			}
 			
-		} while (!ready_to_move);
+		} while (!performed_action);
 		print ("moved");
 		print (target_destination);
 		Destroy(indicator);
+		current_ap -= 1;
+		menu_showing = false;
 		
-		yield return StartCoroutine(MoveTo (target_destination, 1));
+		if (action == ACTIONS.MOVE)
+			yield return StartCoroutine(move_to (target_destination, 1));
+		else
+			yield return null;
 	}
 	
-	public IEnumerator Attack ()
-	{
-		print ("attacking");
-		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
-		indicator.transform.localScale = new Vector3(.85f,.85f,.85f);
-		Vector3 mouse_input = new Vector3(0,0,0);
-		Vector3 target_destination = new Vector3(0,0,0);
-		bool ready_to_attack = false;
-		do
-		{
-			yield return StartCoroutine(GetInput());
-			mouse_input = Input.mousePosition;
-			
-			Plane playerPlane = new Plane(Vector3.up, transform.position);
-			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
-			float hitdist = 0.0f;
- 
-			if (playerPlane.Raycast(ray, out hitdist)) {
-				target_destination = ray.GetPoint(hitdist);
-				print (Vector3.Distance(transform.position, target_destination));
-				if (Vector3.Distance(transform.position, target_destination) <= attack_range)
-				{
-					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
-					transform.rotation = targetRotation;
-					ready_to_attack = true;	
-				}
-				
-			}
-			
-		} while (!ready_to_attack);
-		print ("attacked");
-		print (target_destination);
-		Destroy(indicator);
-		
-		yield return null;
-	}
-	
-	public IEnumerator Defend ()
-	{
-		print ("defending");
-		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
-		Vector3 mouse_input = new Vector3(0,0,0);
-		Vector3 target_destination = new Vector3(0,0,0);
-		bool ready_to_defend = false;
-		do
-		{
-			yield return StartCoroutine(GetInput());
-			mouse_input = Input.mousePosition;
-			
-			Plane playerPlane = new Plane(Vector3.up, transform.position);
-			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
-			float hitdist = 0.0f;
- 
-			if (playerPlane.Raycast(ray, out hitdist)) {
-				target_destination = ray.GetPoint(hitdist);
-				print (Vector3.Distance(transform.position, target_destination));
-				Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
-				transform.rotation = targetRotation;
-				ready_to_defend = true;
-				
-			}
-			
-		} while (!ready_to_defend);
-		print ("defended");
-		print (target_destination);
-		Destroy(indicator);
-		
-		yield return null;
-	}
-	
-	public IEnumerator Spell ()
-	{
-		print ("casting spell");
-		// change based on type of spell
-		indicator = GameObject.Instantiate(Resources.Load("Prefabs/range_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
-		indicator.transform.localScale = new Vector3(3,3,3);
-		Vector3 mouse_input = new Vector3(0,0,0);
-		Vector3 target_destination = new Vector3(0,0,0);
-		bool ready_to_cast = false;
-		do
-		{
-			yield return StartCoroutine(GetInput());
-			mouse_input = Input.mousePosition;
-			
-			Plane playerPlane = new Plane(Vector3.up, transform.position);
-			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
-			float hitdist = 0.0f;
- 
-			if (playerPlane.Raycast(ray, out hitdist)) {
-				target_destination = ray.GetPoint(hitdist);
-				print (Vector3.Distance(transform.position, target_destination));
-				if (Vector3.Distance(transform.position, target_destination) <= attack_range)
-				{
-					Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
-					transform.rotation = targetRotation;
-					ready_to_cast = true;	
-				}
-				
-			}
-			
-		} while (!ready_to_cast);
-		print ("spell casted");
-		print (target_destination);
-		Destroy(indicator);
-		
-		yield return null;
-	}
-	
-	public IEnumerator Wait ()
-	{
-		print ("waiting");
-		indicator = GameObject.Instantiate(Resources.Load("Prefabs/ground_indicator") as GameObject, transform.position, transform.rotation) as GameObject;
-		Vector3 mouse_input = new Vector3(0,0,0);
-		Vector3 target_destination = new Vector3(0,0,0);
-		bool ready_to_wait = false;
-		do
-		{
-			yield return StartCoroutine(GetInput());
-			mouse_input = Input.mousePosition;
-			
-			Plane playerPlane = new Plane(Vector3.up, transform.position);
-			Ray ray = Camera.allCameras[0].ScreenPointToRay(mouse_input);
-			float hitdist = 0.0f;
- 
-			if (playerPlane.Raycast(ray, out hitdist)) {
-				target_destination = ray.GetPoint(hitdist);
-				print (Vector3.Distance(transform.position, target_destination));
-				Quaternion targetRotation = Quaternion.LookRotation(target_destination - transform.position);
-				transform.rotation = targetRotation;
-				ready_to_wait = true;
-			}
-			
-		} while (!ready_to_wait);
-		print ("waited");
-		print (target_destination);
-		Destroy(indicator);
-		
-		yield return null;
-	}
-	
-	public IEnumerator GetInput()
+	public IEnumerator get_input()
 	{
 		bool input_recieved = false;
 		
@@ -241,7 +139,7 @@ private
 		}
 	}
 	
-    public virtual IEnumerator MoveTo (Vector3 pos, float t)
+    public virtual IEnumerator move_to (Vector3 pos, float t)
 	{
 		Vector3 start = transform.position;
 		Vector3 end = pos;
@@ -261,15 +159,15 @@ private
 	#region Event Listeners
 	void OnEnable()
 	{
-		Messenger<int[]>.AddListener("attacked",OnAttacked);
+		Messenger<int[]>.AddListener("attacked",Onattacked);
 	}
 	
 	void OnDisable()
 	{
-		Messenger<int[]>.RemoveListener("attacked",OnAttacked);
+		Messenger<int[]>.RemoveListener("attacked",Onattacked);
 	}
 	
-	void OnAttacked(int[] d) {
+	void Onattacked(int[] d) {
 		
 	}
 	

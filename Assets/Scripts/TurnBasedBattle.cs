@@ -6,167 +6,77 @@ public delegate void TurnEnded(TurnInfo tI);
 
 public class TurnBasedBattle : MonoBehaviour {
 
-    public event TurnEnded enemyTurnEnded;
-    public event TurnEnded playerTurnEnded;
-	public List<Unit> turnOrder = new List<Unit>();
-	private int curUnit = 0;
+    public event TurnEnded enemy_turn_ended;
+    public event TurnEnded player_turn_ended;
 	private BattleManager bm;
-	
-	private ISpell activePlayerSpell = null;
-	private Unit[] activePlayerTargets = null;
 
     // Use this for initialization
     void Start () {
 		bm = ((BattleManager)gameObject.GetComponent((typeof (BattleManager))));
-		turnOrder = bm.turnOrder;
-        StartCoroutine(UpdateState());
+        StartCoroutine(update_state());
         //Immediately start our loop
     }
 
     // Update is called once per frame
-    IEnumerator UpdateState () {
+    IEnumerator update_state () {
 		Debug.Log("battle started");
-		Debug.Log(turnOrder.Count);
+		Debug.Log(bm.turnOrder.Count);
         for(;;) {
         //This is short hand for infinity loop.  Same as while(true).
 			Debug.Log("new state with :" +curUnit);
-			Unit _unit = turnOrder[curUnit];
 			
-			if (_unit.tag == "Player") {
-				turnOrder.RemoveAt(curUnit);
-				Destroy(_unit.gameObject);
-				foreach(Unit u in turnOrder) {
-					bm.EndBattle();
-				}
-				Debug.Log("battle ended");
-				break;
+			if (bm.current_unit.tag == "Player")
+			{
+				yield return StartCoroutine(player_turn (bm.current_unit));
+			} else if (bm.current_unit.tag == "Enemy") {
+				yield return StartCoroutine(enemy_turn(bm.current_unit));
 			}
 			
-			else if (_unit.tag == "Enemy") {
-				turnOrder.RemoveAt(curUnit);
-				Destroy(_unit.gameObject);
-				foreach(Unit u in turnOrder) {
-					bm.EndBattle();
-				}
-				Debug.Log("battle ended");
-				break;
-			}
-		
-            //Do enemy loop, finish, restart loop
-			
-			curUnit++;
-			if (curUnit > turnOrder.Count - 1)
-				curUnit = 0;
+			bm.next_unit();
         }
 		yield return null;
 		
     }
 
-    IEnumerator PlayerTurn() {
+    IEnumerator player_turn(Unit u) {
 		Debug.Log("player turn");
-        activePlayerTargets = null;
-		activePlayerSpell = null;
         //This could be placed in a higher scope for memory purposes.
-
-        bool objectSelected = false;
-        //have we selected an object.
 
         TurnInfo tI = new TurnInfo();
         //create a new turn info tracker.
 		
-		yield return StartCoroutine(MoveTo());
-		// wait until the character moves
+		u.start_turn();
 		
-        yield return StartCoroutine(SelectAbility());
-        //Wait until we find a target before continuing.
-		
-        if(activePlayerSpell != null) 
-            yield return StartCoroutine(SelectTarget());
-		
-		if (activePlayerTargets != null)
-			yield return StartCoroutine(Attack());
-        //Wait until we find a target before continuing.
-		
+		while (u.HasCurrentTurn)
+		{
+			
+		}
 
         Debug.Log("Player Turn Ended");
 
-        if(playerTurnEnded != null) 
-            playerTurnEnded(tI);
+        if(player_turn_ended != null) 
+            player_turn_ended(tI);
     }
 
-    IEnumerator EnemyTurn() {
+    IEnumerator enemy_turn(Unit u) {
 		Debug.Log("enemy turn");
-        Unit target = null;
-		ISpell spell = null;
-		activePlayerSpell = null;
-		activePlayerTargets = null;
         //This could be placed in a higher scope for memory purposes.
 
-        bool objectSelected = false;
-        //have we selected an object.
-
         TurnInfo tI = new TurnInfo();
-        //create a new turn info tracker.
-
-//        yield return StartCoroutine(SelectAbility());
-//        //Wait until we find a target before continuing.
-//
-//        if(activePlayerTargets != null) 
-//            yield return StartCoroutine(Attack());
-        //Wait until we find a target before continuing.
-
-		yield return new WaitForSeconds(2);
+        
+		u.start_turn();
 		
-        Debug.Log("Attacked1");
-
-        if(enemyTurnEnded != null) 
-            enemyTurnEnded(tI);
-
-    }
-
-    IEnumerator SelectAbility () {
-        bool abilitySelected = false;
-
-        while (!abilitySelected) {
-
-            yield return null;
-        }
-    }
-
-    IEnumerator SelectTarget () {
-		bool targetSelected = false;
-		
-		while (!targetSelected) {
-						
-			yield return null;
-		}
-	}	
-
-    IEnumerator Attack () {
-		Debug.Log("attack target");
-        bool attacked = false;
-
-        while(!attacked) {
-
-            yield return null;
-        }   
-
-    }
-	
-	IEnumerator MoveTo() {
-		bool targetSelected = false;
-			
-		while (!targetSelected)
+		while (u.HasCurrentTurn)
 		{
-			yield return null;
+			
 		}
 		
-	}
+        Debug.Log("Enemy Turn Ended");
 
+        if(enemy_turn_ended != null) 
+            enemy_turn_ended(tI);
 
-
-
-
+    }
 }
 
 public struct TurnInfo {

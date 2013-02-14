@@ -4,43 +4,57 @@ using System.Collections.Generic;
 
 public class BattleManager : MonoBehaviour {
 	
-	public List<Unit> Combatants = new List<Unit>();
-	public List<Unit> turnOrder = new List<Unit>();
-	public int currentUnit = 0;
-	public bool InBattle = false;
+public	
+	List<Unit> combatants = new List<Unit>();
+	List<Unit> turn_order = new List<Unit>();
+	bool InBattle = false;
+private
+	int current_unit_index = 0;
 	
-	private static int CompareBySpeed(Unit x, Unit y)
+	public Unit current_unit {
+		get { return turn_order[current_unit_index]; }
+	}
+	
+	private static int compre_by_speed(Unit x, Unit y)
 	{		
 		return 0;
 	}
 	
 	void Start() {}
-	void Update() {
-	}
+	void Update() {}
 	
 	// DO USE THIS for Init
-	public void Init(List<Unit> c)
+	public void init(List<Unit> c)
 	{
-		Combatants = c;
+		combatants = c;
 		OrderTurns();
 		InBattle = true;
 		gameObject.AddComponent((typeof (TurnBasedBattle)));
 	}
 	
-	void OrderTurns()
+	void order_turns()
 	{
-		foreach (Unit u in Combatants) { turnOrder.Add(u); }
+		foreach (Unit u in combatants) { turn_order.Add(u); }
 		
-		turnOrder.Sort(CompareBySpeed);
+		turn_order.Sort(compre_by_speed);
 		
-		foreach (Unit u in turnOrder) { Debug.Log(u.name); }
+		foreach (Unit u in turn_order) { Debug.Log(u.name); }
 	}
 	
-	public void EndBattle() {
+	public void next_unit() {
+		if (current_unit_index > turn_order.Count - 1)
+		{
+			current_unit_index = 0;	
+		} else {
+			current_unit_index++;	
+		}
+	}
+	
+	public void end_battle() {
 		Component.Destroy(gameObject.GetComponent((typeof (TurnBasedBattle))));
 		InBattle = false;
-		Combatants.Clear();
-		turnOrder.Clear();
+		combatants.Clear();
+		turn_order.Clear();
 	}
 	/**/
 }
