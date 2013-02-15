@@ -37,6 +37,11 @@ private
 		turn_started = true;
 	}
 	
+	public void OnMouseDown()
+	{
+		show_menu();	
+	}
+	
 	// Update is called once per frame
 	public virtual void FixedUpdate () {
 		if (!menu_showing && turn_started && current_ap > 0)
@@ -48,6 +53,10 @@ private
 			turn_started = false;
 			current_ap = 0;
 			menu_showing = false;
+		}
+		if (!turn_started)
+		{
+			menu_showing = false;	
 		}
 	}
 	
