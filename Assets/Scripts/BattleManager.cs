@@ -15,7 +15,7 @@ private
 		get { return turn_order[current_unit_index]; }
 	}
 	
-	private static int compre_by_speed(Unit x, Unit y)
+	private static int compare_by_speed(Unit x, Unit y)
 	{		
 		return 0;
 	}
@@ -36,7 +36,7 @@ private
 	{
 		foreach (Unit u in combatants) { turn_order.Add(u); }
 		
-		turn_order.Sort(compre_by_speed);
+		//turn_order.Sort(compare_by_speed);
 		
 		foreach (Unit u in turn_order) { Debug.Log(u.name); }
 	}
