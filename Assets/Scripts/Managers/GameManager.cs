@@ -11,6 +11,8 @@ private
 	public void spawn_player()
 	{
 		GameObject new_player = GameObject.Instantiate(Resources.Load("Prefabs/player")) as GameObject;
+		new_player.transform.position = new Vector3(0,1.5f,0);
+		new_player.transform.rotation = Quaternion.identity;
 		players.Add(new_player.GetComponent("Unit") as Unit);
 	}
 	
