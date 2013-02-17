@@ -7,12 +7,11 @@ public class GameManager : MonoBehaviour {
 private
 	List<Unit> players = new List<Unit>();
 	BattleManager bm;
+	Vector3 spawn_position = new Vector3(0,2,0);
 	
 	public void spawn_player()
 	{
-		GameObject new_player = GameObject.Instantiate(Resources.Load("Prefabs/player")) as GameObject;
-		new_player.transform.position = new Vector3(0,1.5f,0);
-		new_player.transform.rotation = Quaternion.identity;
+		GameObject new_player = Network.Instantiate(Resources.Load("Prefabs/player"),spawn_position,Quaternion.identity, 0) as GameObject;
 		players.Add(new_player.GetComponent("Unit") as Unit);
 	}
 	
@@ -38,5 +37,30 @@ private
 	// Update is called once per frame
 	void Update () {
 	
+	}
+	
+	public void OnServerInitialized()
+	{
+		spawn_player();	
+	}
+	
+	public void OnConnectedToServer()
+	{
+		spawn_player();	
+	}
+	
+	public void OnPlayerDisconnected(NetworkPlayer player)
+	{
+		Debug.Log("Clean up after player " + player);
+		Network.RemoveRPCs(player);
+		Network.DestroyPlayerObjects(player);
+	}
+	
+	public void OnDisconnectedFromServer(NetworkDisconnection info)
+	{
+		Debug.Log("Clean up a bit after server quit");
+		Network.RemoveRPCs(Network.player);
+		Network.DestroyPlayerObjects(Network.player);
+		Application.LoadLevel(Application.loadedLevel);
 	}
 }

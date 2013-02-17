@@ -15,6 +15,8 @@ private
 	bool turn_started = false;
 	int action_points;
 	int current_ap;
+	NetworkViewID viewID;
+	Vector3 last_pos;
     #endregion
 	
 	#region properties
@@ -24,12 +26,20 @@ private
 	#endregion
 	
     #region Methods
+	public void Awake()
+	{
+		if(!networkView.isMine)
+			enabled=false;
+	}
+	
     // Use this for initialization
 	public virtual void Start () {
 		move_range = 5;
 		attack_range = 3;
 		action_points = 2;
 		current_ap = 0;
+		viewID = Network.AllocateViewID();
+		last_pos = transform.position;
 	}
 	
 	public void start_turn() {
@@ -39,7 +49,8 @@ private
 	
 	public void OnMouseDown()
 	{
-		show_menu();	
+		if(networkView.isMine)
+			show_menu();
 	}
 	
 	// Update is called once per frame
@@ -58,6 +69,15 @@ private
 		{
 			menu_showing = false;	
 		}
+		
+		//Save some network bandwidth; only send an rpc when the position has moved more than X
+		if(Vector3.Distance(transform.position, last_pos)>=0.05){
+			last_pos=transform.position;
+			
+			//Send the position Vector3 over to the others; in this case all clients
+			networkView.RPC("rpc_move", RPCMode.Others, transform.position);
+		}
+		
 	}
 	
 	public void show_menu()
@@ -123,6 +143,7 @@ private
 		
 		if (action == ACTIONS.MOVE)
 			yield return StartCoroutine(move_to (target_destination, 1));
+		
 		else
 		{
 			if (current_ap > 0)
@@ -174,8 +195,14 @@ private
 		transform.position = end;
 		if (current_ap > 0)
 		{
-			show_menu();	
+			show_menu();
 		}
+	}
+	
+	[RPC]
+	public void rpc_move(Vector3 location)
+	{
+		transform.position = location;
 	}
     #endregion
 	
