@@ -7,12 +7,12 @@ public class GameManager : MonoBehaviour {
 private
 	List<Unit> players = new List<Unit>();
 	BattleManager bm;
-	Vector3 spawn_position = new Vector3(0,2,0);
 	
-	public void spawn_player()
+	public void spawn_player(Vector3 spawn_position)
 	{
 		GameObject new_player = Network.Instantiate(Resources.Load("Prefabs/player"),spawn_position,Quaternion.identity, 0) as GameObject;
 		players.Add(new_player.GetComponent("Unit") as Unit);
+		print(players[0]._class);
 	}
 	
 	public void start_battle()
@@ -41,12 +41,12 @@ private
 	
 	public void OnServerInitialized()
 	{
-		spawn_player();	
+		spawn_player(GameObject.Find("spawn_one").transform.position);
 	}
 	
 	public void OnConnectedToServer()
 	{
-		spawn_player();	
+		spawn_player(GameObject.Find("spawn_two").transform.position);	
 	}
 	
 	public void OnPlayerDisconnected(NetworkPlayer player)
