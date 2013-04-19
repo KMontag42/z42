@@ -11,7 +11,7 @@ public class UnitClass : MonoBehaviour
 	public int physical_defence;
 	public int magic_defence;
 	public int damage;
-	public int cost;
+	public static int cost;
 	
 	public void Start() {}
 	public void Update() {}

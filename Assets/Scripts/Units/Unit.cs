@@ -19,8 +19,13 @@ public class Unit : MonoBehaviour
 	public UnitClass _class;
 
 	public event EventHandler TurnOver;
+
 	public NetworkViewID viewID;
 	public bool menu_showing = false;
+	public bool defending = false;
+	
+	// THIS MUST BE SET
+	public int team = 0;
 	
 	private
 	int move_range;
@@ -36,6 +41,10 @@ public class Unit : MonoBehaviour
 	{
 		if (TurnOver != null)
 			TurnOver (this, e);
+	}
+	
+	public void Awake ()
+	{
 	}
 	
 	// Use this for initialization
@@ -58,8 +67,7 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
 	public virtual void FixedUpdate ()
 	{		
-		if (_class.hp <= 0)
-			GameObject.Destroy(gameObject);
+		
 	}
 	
 	public void show_menu ()
@@ -75,24 +83,27 @@ public class Unit : MonoBehaviour
 	public IEnumerator do_action (string _ind, ACTIONS action)
 	{
 		indicator = GameObject.Instantiate (Resources.Load ("Prefabs/" + _ind) as GameObject, transform.position, transform.rotation) as GameObject;
-		indicator.transform.localScale = new Vector3 (2, 2, 2);
 		Vector3 mouse_input = new Vector3 (0, 0, 0);
 		Vector3 target_destination = new Vector3 (0, 0, 0);
 		bool performed_action = false;
+		bool action_success = true;
 		int action_range;
 		print ("start do_action AP: " + current_ap);
 		switch (action) {
 		case ACTIONS.MOVE:
 			action_range = move_range;
+			indicator.transform.localScale = new Vector3 (action_range / 2, action_range / 2, action_range / 2);
 			break;
 		case ACTIONS.ATTACK:
 			action_range = attack_range;
+			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
 			break;
 		default:
-			action_range = 100;
+			action_range = 5;
+			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
 			break;
 		}
-				
+		
 		do {
 			yield return StartCoroutine(get_input());
 			mouse_input = Input.mousePosition;
@@ -100,47 +111,65 @@ public class Unit : MonoBehaviour
 			Plane playerPlane = new Plane (Vector3.up, transform.position);
 			Ray ray = Camera.allCameras [0].ScreenPointToRay (mouse_input);
 			float hitdist = 0.0f;
-			RaycastHit hit;
 			
-			if (action == ACTIONS.ATTACK) {
-				if (Physics.Raycast(ray, out hit)) {
-					print (hit.transform.gameObject);
-					target_unit = hit.transform.GetComponent<Unit>();
-					if (target_unit.GetType() == typeof(Unit)) {
-						performed_action = true;	
+			if (playerPlane.Raycast (ray, out hitdist)) {
+				target_destination = ray.GetPoint (hitdist);
+				print (Vector3.Distance (transform.position, target_destination));
+				// the + .3 is to account for some isometric confusion.
+				if (Vector3.Distance (transform.position, target_destination) <= action_range + .3) {
+					Quaternion targetRotation = Quaternion.LookRotation (target_destination - transform.position);
+					transform.rotation = targetRotation;
+						
+					if (action == ACTIONS.ATTACK) {
+						Collider[] hitColliders = Physics.OverlapSphere (target_destination, 2);
+						//print (hit.transform.gameObject);
+						if (hitColliders.Length > 0) {
+							target_unit = hitColliders [0].GetComponent<Unit> ();
+							if (target_unit && target_unit != this) {
+								if (target_unit.GetType () == typeof(Unit)) {
+									performed_action = true;
+								} else {
+									print ("failed");
+									performed_action = true;
+									action_success = false;
+								}
+							} else {
+								print ("failed");
+								performed_action = true;
+								action_success = false;
+							}
+						}
 					}
+						
+					performed_action = true;
 				}
 			}
- 			else {
-				if (playerPlane.Raycast (ray, out hitdist)) {
-					target_destination = ray.GetPoint (hitdist);
-					if (Vector3.Distance (transform.position, target_destination) <= action_range) {
-						Quaternion targetRotation = Quaternion.LookRotation (target_destination - transform.position);
-						transform.rotation = targetRotation;
-						performed_action = true;	
-					}
-				}
-			}
-			
 		} while (!performed_action);
+		
 		Destroy (indicator);
-		current_ap -= 1;
+		
+		if (action_success)
+			current_ap -= 1;
+		
 		print ("after ap decrease: " + current_ap);
+		
 		menu_showing = false;
 		
-		switch (action) {
-		case ACTIONS.MOVE:
-			move_to (target_destination, 1);
-			break;
-		case ACTIONS.WAIT:
-			OnTurnOver (EventArgs.Empty);
-			current_ap = 0;
-			break;
-		case ACTIONS.ATTACK:
-			attack_target (target_unit);
-			break;
-		default:
-			break;
+		if (action_success) {
+			switch (action) {
+			case ACTIONS.MOVE:
+				move_to (target_destination, 1);
+				break;
+			case ACTIONS.WAIT:
+				OnTurnOver (EventArgs.Empty);
+				current_ap = 0;
+				break;
+			case ACTIONS.ATTACK:
+				attack_target (target_unit);
+				break;
+			default:
+				break;
+			}
 		}
 		
 		if (current_ap > 0) {
@@ -195,7 +224,12 @@ public class Unit : MonoBehaviour
 	public virtual void attack_target (Unit u)
 	{
 		print ("attacking targetting: " + u);
-		u._class.hp -= _class.damage;
+		u.take_damage (_class.damage);
+	}
+	
+	public virtual void take_damage (int dmg)
+	{
+		_class.hp -= (int)(dmg - .1f * _class.physical_defence);
 	}
     #endregion
 }

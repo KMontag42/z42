@@ -5,12 +5,10 @@ using System.Collections.Generic;
 
 public class PlayerBattle
 {
-	
-	public
-	List<Unit> players = new List<Unit> ();
+	public List<Unit> players = new List<Unit> ();
+	public Unit current_player;
 	
 	private
-	Unit current_player;
 	int index;
 	
 
@@ -33,14 +31,14 @@ public class PlayerBattle
 			if (y == null) {
 				return 1;
 			} else {
-				bool x_y = x.speed > y.speed;
-				bool y_x = y.speed > x.speed;
+				bool x_y = x._class.speed > y._class.speed;
+				bool y_x = y._class.speed > x._class.speed;
 				//bool eq = x.stats[4].ModValue == y.stats[4].ModValue;
 				
 				if (x_y) {
-					return 1;
-				} else if (y_x) {
 					return -1;
+				} else if (y_x) {
+					return 1;
 				} else {
 					return 0;
 				}
@@ -76,7 +74,6 @@ public class PlayerBattle
 		current_player = players[index];
 		StartTurn(ref current_player);
 	}
-	
 	
 }
 
