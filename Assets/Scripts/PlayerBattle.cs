@@ -10,10 +10,12 @@ public class PlayerBattle
 	
 	private
 	int index;
-	
+	Material selected_unit_material;
+	Material previous_unit_material;
 
 	public PlayerBattle (List<Unit> p)
 	{
+		selected_unit_material = Resources.Load("Materials/selected_unit_material") as Material;
 		players = p;
 		OrderTurns();
 		StartBattle();
@@ -60,6 +62,8 @@ public class PlayerBattle
 	
 	private void StartTurn(ref Unit p)
 	{
+		previous_unit_material = p.renderer.material;
+		p.renderer.material = selected_unit_material;
 		p.current_ap = p._class.action_points;
 		p.TurnOver += new EventHandler(PlayerEndTurn);
 		Debug.Log("Start turn AP: " + p.current_ap);
@@ -69,6 +73,7 @@ public class PlayerBattle
 	private void PlayerEndTurn(object sender, EventArgs e)
 	{
 		current_player.TurnOver -= PlayerEndTurn;
+		current_player.renderer.material = previous_unit_material;
 		index++;
 		index %= players.Count;
 		current_player = players[index];

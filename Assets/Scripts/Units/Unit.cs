@@ -17,12 +17,15 @@ public class Unit : MonoBehaviour
 	public int current_ap;
 	public int speed;
 	public UnitClass _class;
+	public string name;
 
 	public event EventHandler TurnOver;
 
 	public NetworkViewID viewID;
 	public bool menu_showing = false;
 	public bool defending = false;
+	
+	public LayerMask grab_layer;
 	
 	// THIS MUST BE SET
 	public int team = 0;
@@ -88,7 +91,6 @@ public class Unit : MonoBehaviour
 		bool performed_action = false;
 		bool action_success = true;
 		int action_range;
-		print ("start do_action AP: " + current_ap);
 		switch (action) {
 		case ACTIONS.MOVE:
 			action_range = move_range;
@@ -114,22 +116,26 @@ public class Unit : MonoBehaviour
 			
 			if (playerPlane.Raycast (ray, out hitdist)) {
 				target_destination = ray.GetPoint (hitdist);
-				print (Vector3.Distance (transform.position, target_destination));
 				// the + .3 is to account for some isometric confusion.
-				if (Vector3.Distance (transform.position, target_destination) <= action_range + .3) {
+				if (Vector3.Distance (transform.position, target_destination) <= action_range + .3f) {
 					Quaternion targetRotation = Quaternion.LookRotation (target_destination - transform.position);
 					transform.rotation = targetRotation;
-						
 					if (action == ACTIONS.ATTACK) {
-						Collider[] hitColliders = Physics.OverlapSphere (target_destination, 2);
-						//print (hit.transform.gameObject);
+						Collider[] hitColliders = Physics.OverlapSphere (target_destination, 1);
+						print (hitColliders.Length);
 						if (hitColliders.Length > 0) {
-							target_unit = hitColliders [0].GetComponent<Unit> ();
-							if (target_unit && target_unit != this) {
+							foreach (Collider q in hitColliders) {
+								if (q.GetComponent<Unit>() != null) {
+									target_unit = q.GetComponent<Unit>();	
+								}
+							}
+							if (target_unit != null) {
 								if (target_unit.GetType () == typeof(Unit)) {
-									performed_action = true;
+									if (target_unit.gameObject != gameObject)
+										performed_action = true;
 								} else {
 									print ("failed");
+									print (target_unit);
 									performed_action = true;
 									action_success = false;
 								}
@@ -150,8 +156,6 @@ public class Unit : MonoBehaviour
 		
 		if (action_success)
 			current_ap -= 1;
-		
-		print ("after ap decrease: " + current_ap);
 		
 		menu_showing = false;
 		

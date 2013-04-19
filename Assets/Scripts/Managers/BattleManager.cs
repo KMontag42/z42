@@ -11,10 +11,11 @@ public class BattleManager : MonoBehaviour {
 	public List<Unit> player_one_units = new List<Unit>();
 	public List<Unit> player_two_units = new List<Unit>();
 	
-private
+	
 	GameManager gm;
 	int current_unit_index = 0;
-	Rect ap_box = new Rect(50, 50, 150, 50);
+	Rect ap_box = new Rect(50, 50, 150, 75);
+	Rect hp_area = new Rect(Screen.width - 300, 50, 250, 75);
 	Rect full_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
 	Rect current_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
 	
@@ -85,10 +86,19 @@ private
 			}
 			GUILayout.EndArea();
 			
-			current_hp_box.width = 250 * (current_battle.current_player._class.hp / 100.0f);
-			
-			GUI.Box(full_hp_box, "");
-			GUI.Box(current_hp_box, ""+current_battle.current_player._class.hp);
+			GUI.Box(hp_area, "");
+			GUILayout.BeginArea(hp_area);
+			if (current_battle.current_player.team == 1) {
+				foreach (Unit u in player_one_units) {
+					GUILayout.Box("Team 1: "+u.name+" HP: "+u._class.hp);
+				}
+			}
+			else if (current_battle.current_player.team == 2) {
+				foreach (Unit u in player_two_units) {
+					GUILayout.Box("Team 2: "+u.name+" HP: "+u._class.hp);
+				}
+			}
+			GUILayout.EndArea();
 		}
 	}
 }
