@@ -33,7 +33,7 @@ public
 			{
 				//Connect to the "connectToIP" and "connectPort" as entered via the GUI
 				//Ignore the NAT for now
-				Network.useNat = false;
+				//Network.useNat = false;
 				Network.Connect(connectToIP, connectPort);
 			}
 			
@@ -41,7 +41,7 @@ public
 			{
 				//Start a server for 32 clients using the "connectPort" given via the GUI
 				//Ignore the nat for now	
-				Network.useNat = false;
+				//Network.useNat = false;
 				Network.InitializeServer(32, connectPort);
 			}
 			GUILayout.EndVertical();
@@ -124,6 +124,16 @@ public
 	public void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
 	{
 		//Custom code here (your code!)
+	}
+	
+	public void SetTarget(Transform target)
+	{
+	    if (target != null) {
+	        transform.position = target.position;
+	        transform.rotation = target.rotation;
+	    }
+	
+	    transform.parent = target;
 	}
 
 /* 

@@ -12,7 +12,7 @@ public class ProtectorClass : UnitClass
 		hp = 100;
 		physical_defence = 10;
 		magic_defence = 10;
-		damage = 20;
+		damage = 100;
 		cost = 250;
 	}
 }

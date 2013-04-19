@@ -10,7 +10,6 @@ public class GameManagerEditor : Editor {
 	{		
 	    if(GUILayout.Button("Start Battle"))
 	    {
-			Debug.Log ("begin init");
 			(target as GameManager).start_battle();
 		}
 		

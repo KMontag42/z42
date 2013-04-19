@@ -18,6 +18,7 @@ public class PlayerBattle
 	{
 		players = p;
 		OrderTurns();
+		StartBattle();
 	}
 	
 	private static int CompareBySpeed (Unit x, Unit y)
@@ -63,13 +64,13 @@ public class PlayerBattle
 	{
 		p.current_ap = p._class.action_points;
 		p.TurnOver += new EventHandler(PlayerEndTurn);
-		do {
-			p.show_menu();
-		} while (p.current_ap > 0);
+		Debug.Log("Start turn AP: " + p.current_ap);
+		p.show_menu();
 	}
 	
 	private void PlayerEndTurn(object sender, EventArgs e)
 	{
+		current_player.TurnOver -= PlayerEndTurn;
 		index++;
 		index %= players.Count;
 		current_player = players[index];

@@ -18,19 +18,16 @@ private
 	// DO USE THIS for Init
 	public void init(List<Unit> c)
 	{
-		print ("bm init");
 		combatants = c;
-		print ("combatants set");
 		in_battle = true;
-		print ("in battle");
 		current_battle = new PlayerBattle(combatants);
 		battles.Add(current_battle);
-		print ("turn base battle added to gameObject");
 	}
 	
 	public void end_battle() {
 		in_battle = false;
 		combatants.Clear();
+		battles.Remove(current_battle);
+		current_battle = null;
 	}
-	/**/
 }
