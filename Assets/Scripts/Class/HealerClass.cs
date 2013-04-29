@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HealerClass : UnitClass
 {
-	public static int cost = 250;
+	public new static int cost = 250;
 	public HealerClass()
 	{
 		speed = 5;

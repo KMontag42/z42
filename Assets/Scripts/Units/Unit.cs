@@ -17,9 +17,10 @@ public class Unit : MonoBehaviour
 	public int current_ap;
 	public int speed;
 	public UnitClass _class;
-	public string name;
+	public new string name;
 
 	public event EventHandler TurnOver;
+	public event EventHandler TurnStart;
 
 	public NetworkViewID viewID;
 	public bool menu_showing = false;
@@ -31,15 +32,17 @@ public class Unit : MonoBehaviour
 	public int team = 0;
 	
 	private
-	int move_range;
-	int attack_range;
 	GameObject indicator;
-	int action_points;
-	Vector3 last_pos;
 	Unit target_unit;
     #endregion
 	
     #region Methods
+	protected virtual void OnTurnStart (EventArgs e)
+	{
+		if (TurnStart != null)
+			TurnStart (this, e);
+	}
+	
 	protected virtual void OnTurnOver (EventArgs e)
 	{
 		if (TurnOver != null)
@@ -54,11 +57,7 @@ public class Unit : MonoBehaviour
 	public virtual void Start ()
 	{
 		_class = gameObject.GetComponent<UnitClass> ();
-		move_range = _class.move_range;
-		attack_range = _class.attack_range;
-		action_points = _class.action_points;
 		current_ap = 0;
-		last_pos = transform.position;
 	}
 	
 	public void OnMouseDown ()
@@ -91,13 +90,21 @@ public class Unit : MonoBehaviour
 		bool performed_action = false;
 		bool action_success = true;
 		int action_range;
+		
+		if (current_ap == _class.action_points)
+			OnTurnStart(EventArgs.Empty);
+		
 		switch (action) {
 		case ACTIONS.MOVE:
-			action_range = move_range;
+			action_range = _class.move_range;
 			indicator.transform.localScale = new Vector3 (action_range / 2, action_range / 2, action_range / 2);
 			break;
 		case ACTIONS.ATTACK:
-			action_range = attack_range;
+			action_range = _class.attack_range;
+			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
+			break;
+		case ACTIONS.SPELL:
+			action_range = _class.spell_range;
 			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
 			break;
 		default:
@@ -171,6 +178,9 @@ public class Unit : MonoBehaviour
 			case ACTIONS.ATTACK:
 				attack_target (target_unit);
 				break;
+			case ACTIONS.SPELL:
+				cast_spell_on_target (target_unit);
+				break;
 			default:
 				break;
 			}
@@ -231,9 +241,20 @@ public class Unit : MonoBehaviour
 		u.take_damage (_class.damage);
 	}
 	
+	public virtual void cast_spell_on_target(Unit u)
+	{
+		print ("casting spell on target: " + u);
+		u.receive_spell(_class.spell);
+	}
+	
 	public virtual void take_damage (int dmg)
 	{
 		_class.hp -= (int)(dmg - .1f * _class.physical_defence);
+	}
+	
+	public virtual void receive_spell(Spell s)
+	{
+		s.perform_spell(this);	
 	}
     #endregion
 }

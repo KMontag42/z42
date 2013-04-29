@@ -65,9 +65,14 @@ public class PlayerBattle
 		previous_unit_material = p.renderer.material;
 		p.renderer.material = selected_unit_material;
 		p.current_ap = p._class.action_points;
+		p.TurnStart += new EventHandler(PlayerStartTurn);
 		p.TurnOver += new EventHandler(PlayerEndTurn);
 		Debug.Log("Start turn AP: " + p.current_ap);
 		p.show_menu();
+	}
+	
+	private void PlayerStartTurn(object sender, EventArgs e)
+	{
 	}
 	
 	private void PlayerEndTurn(object sender, EventArgs e)

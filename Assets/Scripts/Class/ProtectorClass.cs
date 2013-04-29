@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ProtectorClass : UnitClass
 {
-	public static int cost = 250;
+	public new static int cost = 250;
 	public ProtectorClass()
 	{
 		speed = 10;

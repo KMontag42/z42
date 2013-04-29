@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GunnerClass : UnitClass
 {
-	public static int cost = 350;
+	public new static int cost = 350;
 	public GunnerClass()
 	{
 		speed = 20;

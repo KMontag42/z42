@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MageClass : UnitClass
 {
-	public static int cost = 350;
+	public new static int cost = 350;
 	public MageClass()
 	{
 		speed = 10;
