@@ -66,7 +66,8 @@ public
 				GUILayout.Label("Connections: "+Network.connections.Length);
 				if(Network.connections.Length>=1){
 					GUILayout.Label("Ping to first player: "+Network.GetAveragePing(  Network.connections[0] ) );
-				}			
+				}
+				GUILayout.Label("Address: "+Network.natFacilitatorIP);
 			}
 	
 			if (GUILayout.Button ("Disconnect"))

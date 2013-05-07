@@ -12,15 +12,21 @@ public class Spell
 	
 	public int effect_damage;
 	public int spell_range;
+	public int spell_area;
 	public TYPE type;
+	public string effect;
 	
-	public Spell(int e_d, int s_r, TYPE t)
+	// defaults
+	public Spell() {}
+	
+	public Spell(int e_d, int s_r, int s_a, TYPE t)
 	{
 		effect_damage = e_d;
 		spell_range = s_r;
+		spell_area = s_a;
 		type = t;
 	}
 	
-	public virtual void perform_spell(Unit target){}
+	public virtual void perform_spell(Unit caster, Unit target){}
 }
 

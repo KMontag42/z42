@@ -20,29 +20,38 @@ public class Unit : MonoBehaviour
 	public new string name;
 
 	public event EventHandler TurnOver;
-	public event EventHandler TurnStart;
 
 	public NetworkViewID viewID;
+	public NetworkPlayer owner;
+	public string network_id;
 	public bool menu_showing = false;
 	public bool defending = false;
-	
 	public LayerMask grab_layer;
+	
+	// for paladin spell
+	public bool sharing_dmg;
+	public Unit sharing_dmg_with;
+	public int sharing_percent;
+	
+	// for theif spell
+	public bool boost_dmg;
+	public int boost_percent;
+	
+	// for gunner spell
+	public bool is_bleeding;
+	public int bleed_dmg;
+	public int bleed_timer;
 	
 	// THIS MUST BE SET
 	public int team = 0;
-	
 	private
 	GameObject indicator;
 	Unit target_unit;
+	List<Unit> target_units = new List<Unit> ();
+	BattleManager bm;
     #endregion
 	
     #region Methods
-	protected virtual void OnTurnStart (EventArgs e)
-	{
-		if (TurnStart != null)
-			TurnStart (this, e);
-	}
-	
 	protected virtual void OnTurnOver (EventArgs e)
 	{
 		if (TurnOver != null)
@@ -58,18 +67,65 @@ public class Unit : MonoBehaviour
 	{
 		_class = gameObject.GetComponent<UnitClass> ();
 		current_ap = 0;
+		network_id = Network.player.guid;
+		bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
 	}
 	
 	public void OnMouseDown ()
 	{
-		//if (networkView.isMine)
-		//	show_menu ();
 	}
 	
 	// Update is called once per frame
 	public virtual void FixedUpdate ()
 	{		
 		
+	}
+	
+	
+	// used mostly for start of turn effects
+	[RPC]
+	public void start_turn (string nvid)
+	{
+		if (is_bleeding && bleed_timer > 0) {
+			take_damage (bleed_dmg);
+			bleed_timer--;
+			if (bleed_timer == 0) {
+				is_bleeding = false;	
+				Destroy (transform.FindChild ("poison_effect(Clone)").gameObject);
+			}
+		}
+	}
+	
+	[RPC]
+	public void set_material(int mat) {
+		if (mat == 0)
+			renderer.material = Resources.Load("Materials/selected_unit_material") as Material;
+		else if (mat == 1)
+			renderer.material = Resources.Load("Materials/player_one_material") as Material;
+		else if (mat == 2)
+			renderer.material = Resources.Load("Materials/player_two_material") as Material;
+	}
+	
+	[RPC]
+	public void set_current_ap(int _cur_ap) {
+		current_ap = _cur_ap;	
+	}
+	
+	[RPC]
+	public void show_menu_rpc(string nvid){
+		if (nvid == network_id)
+			show_menu();
+	}
+	
+	[RPC]
+	public void set_team(int _team) {
+		team = _team;
+	}
+	
+	[RPC]
+	public void set_owner(NetworkPlayer player) {
+		owner = player;
+		network_id = player.guid;
 	}
 	
 	public void show_menu ()
@@ -91,9 +147,6 @@ public class Unit : MonoBehaviour
 		bool action_success = true;
 		int action_range;
 		
-		if (current_ap == _class.action_points)
-			OnTurnStart(EventArgs.Empty);
-		
 		switch (action) {
 		case ACTIONS.MOVE:
 			action_range = _class.move_range;
@@ -105,7 +158,7 @@ public class Unit : MonoBehaviour
 			break;
 		case ACTIONS.SPELL:
 			action_range = _class.spell_range;
-			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
+			indicator.transform.localScale = new Vector3 (action_range, action_range, action_range);
 			break;
 		default:
 			action_range = 5;
@@ -132,28 +185,102 @@ public class Unit : MonoBehaviour
 						print (hitColliders.Length);
 						if (hitColliders.Length > 0) {
 							foreach (Collider q in hitColliders) {
-								if (q.GetComponent<Unit>() != null) {
-									target_unit = q.GetComponent<Unit>();	
+								// grabs first unit
+								if (q.GetComponent<Unit> () != null) {
+									target_unit = q.GetComponent<Unit> ();	
 								}
 							}
 							if (target_unit != null) {
-								if (target_unit.GetType () == typeof(Unit)) {
-									if (target_unit.gameObject != gameObject)
-										performed_action = true;
+								if (target_unit.gameObject != gameObject) {
+									performed_action = true;
+									action_success = true;
 								} else {
-									print ("failed");
+									print ("failed can't attack self");
 									print (target_unit);
 									performed_action = true;
 									action_success = false;
 								}
 							} else {
-								print ("failed");
+								print ("failed no units");
 								performed_action = true;
 								action_success = false;
 							}
 						}
 					}
+					
+					if (action == ACTIONS.SPELL) {
+						Collider[] hitColliders = Physics.OverlapSphere (target_destination, _class.spell.spell_area);
+						print (hitColliders.Length);
 						
+						// TODO: CHECK FOR SPELL TYPE AND DO DIFFERENT THINGS ACCORDINGLY
+						// SELF: DON'T SHOW INDICATOR, JUST DO SPELL
+						// ENEMY: CHECK IF COLLIDER Q IS ENEMY OR ALLY
+						// ALLY: SAME
+						
+						switch (_class.spell.type) {
+						case Spell.TYPE.ALLY:
+							if (hitColliders.Length > 0) {
+								target_units.Clear ();
+								foreach (Collider q in hitColliders) {
+										
+									if (q.GetComponent<Unit> () != null && q.tag == tag) {
+										target_units.Add (q.GetComponent<Unit> ());
+										action_success = true || action_success;
+									} else {
+										print ("failed, not ally " + q);
+										action_success = false || action_success;
+									}
+								}	
+								performed_action = true;
+							}
+							break;
+						case Spell.TYPE.ENEMY:
+							print (hitColliders.Length);
+							if (hitColliders.Length > 0) {
+								target_units.Clear ();
+								foreach (Collider q in hitColliders) {
+									print (q);	
+									if (q.GetComponent<Unit> () != null) {
+										if (q.tag != tag) {
+											target_units.Add (q.GetComponent<Unit> ());
+											action_success = true || action_success;
+										} else {
+											print ("failed, not	enemy " + q);
+											action_success = false || action_success;
+										}
+									} else {
+										print ("failed, not unit " + q);
+										action_success = false || action_success;
+									}
+								}
+								performed_action = true;
+							}
+							break;
+						case Spell.TYPE.SELF:
+							if (hitColliders.Length > 0) {
+								target_units.Clear ();
+								foreach (Collider q in hitColliders) {
+										
+									if (q.GetComponent<Unit> () != null) {
+										if (q.gameObject == gameObject) {
+											target_units.Add (q.GetComponent<Unit> ());
+											action_success = true || action_success;
+										} else {
+											print ("failed, not self");
+											print (target_unit);
+											action_success = false || action_success;
+										}
+									} else {
+										print ("failed, not a unit " + q);
+										action_success = false || action_success;
+									}
+								}
+								performed_action = true;
+							}
+							break;
+						}
+					}
+					
 					performed_action = true;
 				}
 			}
@@ -179,7 +306,7 @@ public class Unit : MonoBehaviour
 				attack_target (target_unit);
 				break;
 			case ACTIONS.SPELL:
-				cast_spell_on_target (target_unit);
+				cast_spell_on_target (ref target_units);
 				break;
 			default:
 				break;
@@ -187,7 +314,7 @@ public class Unit : MonoBehaviour
 		}
 		
 		if (current_ap > 0) {
-			show_menu ();
+			show_menu();
 			yield return null;
 		} else {
 			OnTurnOver (EventArgs.Empty);
@@ -223,38 +350,55 @@ public class Unit : MonoBehaviour
 		Vector3 start = transform.position;
 		Vector3 end = pos;
 		
-		float _t = 0;
+		iTween.MoveTo (gameObject, iTween.Hash ("x", pos.x, "y", pos.y, "z", pos.z, "easeType", "easeInOutQuad"));
 		
-		while (_t < 1) {
-			_t += Time.deltaTime / t;
-			transform.position = Vector3.Lerp (start, end, _t);
-		}
-		transform.position = end;
 		if (current_ap > 0) {
-			show_menu ();
+			show_menu();
 		}
 	}
 	
 	public virtual void attack_target (Unit u)
 	{
 		print ("attacking targetting: " + u);
-		u.take_damage (_class.damage);
+		if (boost_dmg) {
+			print ("damage boosted");
+			u.take_damage (_class.damage * (boost_percent / 100));
+			GameObject g = GameObject.Instantiate (Resources.Load ("Prefabs/Power Burst"), u.transform.position, Quaternion.identity) as GameObject;
+			Destroy (transform.FindChild ("theif_charged(Clone)").gameObject);
+		} else
+			u.take_damage (_class.damage);
 	}
 	
-	public virtual void cast_spell_on_target(Unit u)
+	public virtual void cast_spell_on_target (ref List<Unit> u)
 	{
-		print ("casting spell on target: " + u);
-		u.receive_spell(_class.spell);
+		
+		foreach (Unit _u in u) {
+			print ("casting spell on target: " + _u);
+			_u.receive_spell (_class.spell, this);
+		}
+		
+		u.Clear ();
 	}
 	
 	public virtual void take_damage (int dmg)
 	{
-		_class.hp -= (int)(dmg - .1f * _class.physical_defence);
+		if (sharing_dmg) {
+			print ("sharing damage");
+			sharing_dmg_with.take_damage (dmg * (sharing_percent / 100));
+			_class.hp -= (int)(dmg * (1 - (sharing_percent / 100)));
+			sharing_dmg = false;
+			sharing_dmg_with = null;
+			sharing_percent = 0;
+			Destroy (transform.FindChild ("Ground Vortex(Clone)").gameObject);
+		} else {
+			_class.hp -= (int)(dmg - .1f * _class.physical_defence);
+		}
 	}
 	
-	public virtual void receive_spell(Spell s)
+	public virtual void receive_spell (Spell s, Unit caster)
 	{
-		s.perform_spell(this);	
+		print ("Receiving spell " + s + " from: " + caster);
+		s.perform_spell (caster, this);	
 	}
     #endregion
 }
