@@ -122,17 +122,18 @@ public class GameManager : MonoBehaviour {
 			Transform spawn_one = GameObject.Find("spawn_one").transform;
 			Transform spawn_two = GameObject.Find("spawn_two").transform;
 			bm = GameObject.Find("BattleManager").GetComponent("BattleManager") as BattleManager;
-//			for(int i = 0; i < player_one_units.Count; i++){
-//				spawn_player(player_one_units[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0);
-//				players.Remove(null);
-//			}
-			if (Network.isServer)
-				spawn_player(player_one_units[0], new Vector3(-9 + 0 * 5, spawn_one.position.y, spawn_one.position.z), 0, player_one);
 			
-//			for(int i = 0; i < player_two_units.Count; i++){
-//				spawn_player(player_two_units[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1);
-//				players.Remove(null);
-//			}
+			if (Network.isServer) {
+			for(int i = 0; i < player_one_units.Count; i++){
+				spawn_player(player_one_units[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.player);
+				players.Remove(null);
+			}
+			
+			for(int i = 0; i < player_two_units.Count; i++){
+				spawn_player(player_two_units[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.player);
+				players.Remove(null);
+			}
+			}
 		}
 	}
 	
