@@ -13,7 +13,7 @@ public class BattleManager : MonoBehaviour {
 	public List<Unit> player_two_units = new List<Unit>();
 	
 	
-	GameManager gm;
+	public GameManager gm;
 	int current_unit_index = 0;
 	Rect ap_box = new Rect(50, 50, 150, 75);
 	Rect team_1_hp_area = new Rect(Screen.width - 300, 50, 250, 75);
@@ -67,13 +67,33 @@ public class BattleManager : MonoBehaviour {
 				player_two_units.Add(_c);
 		}
 		in_battle = true;
-		current_battle = new PlayerBattle(combatants, this);
+		if (Network.isServer)
+			networkView.RPC("start_player_battle", RPCMode.AllBuffered);
 		battles.Add(current_battle);
 	}
 	
 	[RPC]
+	public void start_player_battle() {
+		if (Network.isServer) {
+			GameObject t = Network.Instantiate(Resources.Load("Prefabs/PlayerBattle"), Vector3.zero, Quaternion.identity, 0) as GameObject;
+			current_battle = t.GetComponent<PlayerBattle>();
+			current_battle.init(combatants, this);
+		}
+	}
+	
+	[RPC]
 	public void add_player_end_turn_listener() {
-		current_battle.current_player.TurnOver += new EventHandler(current_battle.PlayerEndTurn);	
+		current_battle.current_player.TurnOver += new EventHandler(PlayerEndTurn);	
+	}
+	
+	public void PlayerEndTurn(object sender, EventArgs e)
+	{
+		current_battle.current_player.TurnOver -= PlayerEndTurn;
+		current_battle.current_player.networkView.RPC("set_material", RPCMode.AllBuffered, current_battle.previous_unit_material);
+		current_battle.index++;
+		current_battle.index %= current_battle.players.Count;
+		current_battle.current_player = current_battle.players[current_battle.index];
+		current_battle.StartTurn(ref current_battle.current_player);
 	}
 	
 	public void end_battle() {

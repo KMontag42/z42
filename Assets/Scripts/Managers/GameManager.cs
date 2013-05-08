@@ -35,9 +35,10 @@ public class GameManager : MonoBehaviour {
 			new_player.tag = "team_2";	
 		}
 		players.Add (new_player);
-		//players.Remove(null);
+		players.Remove(null);
 	}
 	
+	[RPC]
 	public void start_battle()
 	{
 		bm.init(players);
@@ -107,12 +108,18 @@ public class GameManager : MonoBehaviour {
 		if (Application.loadedLevelName == "battle_test") {
 			Network.isMessageQueueRunning = true;
 			GUILayout.BeginVertical();
-			if (GUILayout.Button ("Start Battle"))
-			{
-				start_battle();	
-			}
+			if (Network.isServer)
+				if (GUILayout.Button ("Start Battle"))
+				{
+					networkView.RPC("start_battle", RPCMode.AllBuffered);	
+				}
 			GUILayout.Label("Player guid: "+Network.player.guid);
 		}
+	}
+	
+	[RPC]
+	void OnLevelWasLoadedRPC() {
+		OnLevelWasLoaded();	
 	}
 	
 	void OnLevelWasLoaded() {
@@ -124,15 +131,15 @@ public class GameManager : MonoBehaviour {
 			bm = GameObject.Find("BattleManager").GetComponent("BattleManager") as BattleManager;
 			
 			if (Network.isServer) {
-			for(int i = 0; i < player_one_units.Count; i++){
-				spawn_player(player_one_units[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.player);
-				players.Remove(null);
-			}
-			
-			for(int i = 0; i < player_two_units.Count; i++){
-				spawn_player(player_two_units[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.player);
-				players.Remove(null);
-			}
+				for(int i = 0; i < player_one_units.Count; i++){
+					spawn_player(player_one_units[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.player);
+					players.Remove(null);
+				}
+				
+				for(int i = 0; i < player_two_units.Count; i++){
+					spawn_player(player_two_units[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.player);
+					players.Remove(null);
+				}
 			}
 		}
 	}
@@ -160,8 +167,7 @@ public class GameManager : MonoBehaviour {
 		// Now the level has been loaded and we can start sending out data to clients
 		Network.SetSendingEnabled(0, true);
 
-
-		foreach (GameObject go in FindObjectsOfType(typeof(GameObject)))
-			go.SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);	
+		if (Network.isServer)
+			networkView.RPC("OnLevelWasLoadedRPC", RPCMode.AllBuffered);	
 	}
 }
