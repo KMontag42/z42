@@ -14,6 +14,8 @@ public class MageClass : UnitClass
 		physical_defence = 0;
 		magic_defence = 0;
 		damage = 25;
+		spell = new MageSpell();
+		spell_range = spell.spell_range;
 	}
 }
 

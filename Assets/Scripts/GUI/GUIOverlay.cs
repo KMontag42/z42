@@ -20,10 +20,12 @@ public class GUIOverlay : MonoBehaviour
 		MovieClip magic_button;
 		MovieClip wait_button;
 		static Unit selected_player;
+		GameManager gm;
 	
 	void Start ()
 	{
-        
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		
 		// validate MovieClipOverlayCameraBehaviour ist attached to camera
 		if (MovieClipOverlayCameraBehaviour.instance == null) {
 			return;

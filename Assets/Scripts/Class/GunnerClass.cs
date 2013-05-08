@@ -14,6 +14,8 @@ public class GunnerClass : UnitClass
 		physical_defence = 5;
 		magic_defence = 5;
 		damage = 15;
+		spell = new GunnerSpell();
+		spell_range = spell.spell_range;
 	}
 }
 

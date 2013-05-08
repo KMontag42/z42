@@ -15,6 +15,8 @@ public class TheifClass : UnitClass
 		physical_defence = 5;
 		magic_defence = 5;
 		damage = 10;
+		spell = new TheifSpell();
+		spell_range = spell.spell_range;
 	}
 }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,7 +16,9 @@ public class BattleManager : MonoBehaviour {
 	GameManager gm;
 	int current_unit_index = 0;
 	Rect ap_box = new Rect(50, 50, 150, 75);
-	Rect hp_area = new Rect(Screen.width - 300, 50, 250, 75);
+	Rect team_1_hp_area = new Rect(Screen.width - 300, 50, 250, 75);
+	Rect team_2_hp_area = new Rect(Screen.width - 300, 150, 250, 75);
+	
 	Rect full_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
 	Rect current_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
 	
@@ -64,8 +67,13 @@ public class BattleManager : MonoBehaviour {
 				player_two_units.Add(_c);
 		}
 		in_battle = true;
-		current_battle = new PlayerBattle(combatants);
+		current_battle = new PlayerBattle(combatants, this);
 		battles.Add(current_battle);
+	}
+	
+	[RPC]
+	public void add_player_end_turn_listener() {
+		current_battle.current_player.TurnOver += new EventHandler(current_battle.PlayerEndTurn);	
 	}
 	
 	public void end_battle() {
@@ -86,17 +94,16 @@ public class BattleManager : MonoBehaviour {
 			}
 			GUILayout.EndArea();
 			
-			GUI.Box(hp_area, "");
-			GUILayout.BeginArea(hp_area);
-			if (current_battle.current_player.team == 1) {
-				foreach (Unit u in player_one_units) {
-					GUILayout.Box("Team 1: "+u.name+" HP: "+u._class.hp);
-				}
+			GUI.Box(team_1_hp_area, "");
+			GUILayout.BeginArea(team_1_hp_area);
+			foreach (Unit u in player_one_units) {
+				GUILayout.Box("Team 1: "+u.name+" HP: "+u._class.hp);
 			}
-			else if (current_battle.current_player.team == 2) {
-				foreach (Unit u in player_two_units) {
-					GUILayout.Box("Team 2: "+u.name+" HP: "+u._class.hp);
-				}
+			GUILayout.EndArea();
+			GUI.Box(team_2_hp_area, "");
+			GUILayout.BeginArea(team_2_hp_area);
+			foreach (Unit u in player_two_units) {
+				GUILayout.Box("Team 2: "+u.name+" HP: "+u._class.hp);
 			}
 			GUILayout.EndArea();
 		}

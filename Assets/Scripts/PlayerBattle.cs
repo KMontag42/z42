@@ -10,15 +10,17 @@ public class PlayerBattle
 	
 	private
 	int index;
-	Material selected_unit_material;
-	Material previous_unit_material;
+	int selected_unit_material = 0;
+	int previous_unit_material;
+	BattleManager bm;
 
-	public PlayerBattle (List<Unit> p)
+	public PlayerBattle (List<Unit> p, BattleManager _bm)
 	{
-		selected_unit_material = Resources.Load("Materials/selected_unit_material") as Material;
 		players = p;
 		OrderTurns();
 		StartBattle();
+		bm = _bm;
+		Debug.Log(bm);
 	}
 	
 	private static int CompareBySpeed (Unit x, Unit y)
@@ -62,23 +64,22 @@ public class PlayerBattle
 	
 	private void StartTurn(ref Unit p)
 	{
-		previous_unit_material = p.renderer.material;
-		p.renderer.material = selected_unit_material;
-		p.current_ap = p._class.action_points;
-		p.TurnStart += new EventHandler(PlayerStartTurn);
-		p.TurnOver += new EventHandler(PlayerEndTurn);
+		if (p.renderer.material.color.r == 255)
+			previous_unit_material = 1;
+		else if (p.renderer.material.color.b == 255)
+			previous_unit_material = 2;
+		p.networkView.RPC("start_turn", RPCMode.AllBuffered, Network.player.guid);
+		p.networkView.RPC("set_material", RPCMode.AllBuffered, selected_unit_material);
+		p.networkView.RPC("set_current_ap",RPCMode.AllBuffered, p._class.action_points);
+		bm.networkView.RPC("add_player_end_turn_listener", RPCMode.AllBuffered);
+		p.networkView.RPC ("show_menu", RPCMode.AllBuffered, current_player.network_id);
 		Debug.Log("Start turn AP: " + p.current_ap);
-		p.show_menu();
 	}
 	
-	private void PlayerStartTurn(object sender, EventArgs e)
-	{
-	}
-	
-	private void PlayerEndTurn(object sender, EventArgs e)
+	public void PlayerEndTurn(object sender, EventArgs e)
 	{
 		current_player.TurnOver -= PlayerEndTurn;
-		current_player.renderer.material = previous_unit_material;
+		current_player.networkView.RPC("set_material", RPCMode.AllBuffered, previous_unit_material);
 		index++;
 		index %= players.Count;
 		current_player = players[index];

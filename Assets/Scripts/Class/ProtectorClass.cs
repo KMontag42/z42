@@ -14,6 +14,8 @@ public class ProtectorClass : UnitClass
 		physical_defence = 10;
 		magic_defence = 10;
 		damage = 5;
+		spell = new ProtectorSpell();
+		spell_range = spell.spell_range;
 	}
 }
 

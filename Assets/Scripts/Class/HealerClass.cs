@@ -14,6 +14,8 @@ public class HealerClass : UnitClass
 		physical_defence = 0;
 		magic_defence = 0;
 		damage = -10;
+		spell = new HealerSpell();
+		spell_range = spell.spell_range;
 	}
 }
 
