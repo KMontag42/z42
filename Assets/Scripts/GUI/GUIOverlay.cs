@@ -21,11 +21,13 @@ public class GUIOverlay : MonoBehaviour
 		MovieClip wait_button;
 		static Unit selected_player;
 		GameManager gm;
-	
+		BattleManager bm;
+		TeamFrame player_one_frame;
+		
 	void Start ()
 	{
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-		
+		bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
 		// validate MovieClipOverlayCameraBehaviour ist attached to camera
 		if (MovieClipOverlayCameraBehaviour.instance == null) {
 			return;
@@ -67,6 +69,10 @@ public class GUIOverlay : MonoBehaviour
 		stage.addChild (menu);
 		
 		menu.visible = false;
+		
+		player_one_frame = new TeamFrame( bm.player_one_units );
+		stage.addChild(player_one_frame.frame);
+		
 	}
 
 	void Update ()
