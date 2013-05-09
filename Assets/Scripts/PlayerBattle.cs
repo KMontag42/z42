@@ -8,7 +8,7 @@ public class PlayerBattle : MonoBehaviour
 	public List<Unit> players = new List<Unit> ();
 	public Unit current_player;
 	
-	public int index;
+	public int index = 0;
 	public int selected_unit_material = 0;
 	public int previous_unit_material;
 	public BattleManager bm;
@@ -17,13 +17,23 @@ public class PlayerBattle : MonoBehaviour
 	
 	public void Update() {}
 	
-	public void init (List<Unit> p, BattleManager _bm)
+	public void init ()
 	{
-		players = p;
-		bm = _bm;
+		networkView.RPC("set_battle_manager", RPCMode.AllBuffered);
+		networkView.RPC("set_players", RPCMode.AllBuffered);
 		networkView.RPC ("OrderTurns", RPCMode.AllBuffered);
 		networkView.RPC ("StartBattle", RPCMode.AllBuffered);
 		Debug.Log(bm);
+	}
+	
+	[RPC]
+	public void set_battle_manager() {
+		bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+	}
+	
+	[RPC]
+	public void set_players() {
+		players = bm.combatants;	
 	}
 	
 	private static int CompareBySpeed (Unit x, Unit y)
@@ -87,11 +97,24 @@ public class PlayerBattle : MonoBehaviour
 		p.networkView.RPC("set_material", RPCMode.AllBuffered, selected_unit_material);
 		p.networkView.RPC("set_current_ap",RPCMode.AllBuffered, p._class.action_points);
 		bm.networkView.RPC("add_player_end_turn_listener", RPCMode.AllBuffered);
-		p.networkView.RPC ("show_menu_rpc", RPCMode.AllBuffered, current_player.network_id);
+		p.networkView.RPC ("show_menu_rpc", p.owner, current_player.network_id);
 		Debug.Log("Start turn AP: " + p.current_ap);
 	}
 	
+	[RPC]
+	public void add_player_end_turn_listener() {
+		current_player.TurnOver += new EventHandler(PlayerEndTurn);	
+	}
 	
+	public void PlayerEndTurn(object sender, EventArgs e)
+	{
+		current_player.TurnOver -= PlayerEndTurn;
+		current_player.networkView.RPC("set_material", RPCMode.AllBuffered, previous_unit_material);
+		networkView.RPC("set_index", RPCMode.AllBuffered, index+1);
+		networkView.RPC("set_index", RPCMode.AllBuffered, index % players.Count);
+		networkView.RPC("set_current_player", RPCMode.AllBuffered, index);
+		StartTurn(ref current_player);
+	}
 	
 }
 

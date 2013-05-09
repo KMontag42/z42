@@ -4,12 +4,14 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 	
-	public List<string> player_one_units = new List<string>();
-	public List<string> player_two_units = new List<string>();
+	public List<string> player_one_strings = new List<string>();
+	public List<string> player_two_strings = new List<string>();
+	
 	public List<Material> team_materials = new List<Material>();
 	public int winner;
 	
 	public List<Unit> players = new List<Unit>();
+	public List<Unit> server_players = new List<Unit>();
 	public string player_one_id = "--";
 	public NetworkPlayer player_one;
 	public string player_two_id = "--";
@@ -34,14 +36,23 @@ public class GameManager : MonoBehaviour {
 		} else {
 			new_player.tag = "team_2";	
 		}
-		players.Add (new_player);
-		players.Remove(null);
+		server_players.Add (new_player);
+		if (Network.isServer)
+			players.Remove(null);
 	}
 	
 	[RPC]
 	public void start_battle()
 	{
 		bm.init(players);
+	}
+	
+	[RPC]
+	public void set_all_players() {
+		foreach (GameObject u in GameObject.FindGameObjectsWithTag("Player")) {
+			if (u.GetComponent<Unit>() != null)
+				players.Add(u.GetComponent<Unit>());
+		}
 	}
 	
 	[RPC]
@@ -67,9 +78,9 @@ public class GameManager : MonoBehaviour {
 	[RPC]
 	public void add_unit_from_player(string nvid, string u) {
 		if (nvid == player_one_id)
-			player_one_units.Add(u);
+			player_one_strings.Add(u);
 		else if (nvid == player_two_id)
-			player_two_units.Add(u);
+			player_two_strings.Add(u);
 		else
 			print ("failed add_unit_from_player nvid: "+nvid);
 	}
@@ -82,6 +93,12 @@ public class GameManager : MonoBehaviour {
 			player_two_ready = true;
 		else
 			print ("failed set_player_ready nvid: "+nvid);
+	}
+	
+	[RPC]
+	public void set_team_materials() {
+		team_materials.Add(Resources.Load("Materials/player_one_material") as Material);
+		team_materials.Add(Resources.Load("Materials/player_two_material") as Material);
 	}
 	
 	public void print_players()
@@ -124,22 +141,25 @@ public class GameManager : MonoBehaviour {
 	
 	void OnLevelWasLoaded() {
 		if (Application.loadedLevelName == "battle_test") {
-			team_materials.Add(Resources.Load("Materials/player_one_material") as Material);
-			team_materials.Add(Resources.Load("Materials/player_two_material") as Material);
+			
 			Transform spawn_one = GameObject.Find("spawn_one").transform;
 			Transform spawn_two = GameObject.Find("spawn_two").transform;
 			bm = GameObject.Find("BattleManager").GetComponent("BattleManager") as BattleManager;
 			
 			if (Network.isServer) {
-				for(int i = 0; i < player_one_units.Count; i++){
-					spawn_player(player_one_units[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.player);
-					players.Remove(null);
+				networkView.RPC("set_team_materials", RPCMode.AllBuffered);
+				
+				for(int i = 0; i < player_one_strings.Count; i++){
+					spawn_player(player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.connections[0]);
+					server_players.Remove(null);
 				}
 				
-				for(int i = 0; i < player_two_units.Count; i++){
-					spawn_player(player_two_units[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.player);
-					players.Remove(null);
+				for(int i = 0; i < player_two_strings.Count; i++){
+					spawn_player(player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.connections[1]);
+					server_players.Remove(null);
 				}
+				
+				networkView.RPC("set_all_players", RPCMode.AllBuffered);
 			}
 		}
 	}

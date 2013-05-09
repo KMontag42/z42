@@ -73,27 +73,19 @@ public class BattleManager : MonoBehaviour {
 	}
 	
 	[RPC]
-	public void start_player_battle() {
+	public void set_current_battle() {
 		if (Network.isServer) {
 			GameObject t = Network.Instantiate(Resources.Load("Prefabs/PlayerBattle"), Vector3.zero, Quaternion.identity, 0) as GameObject;
 			current_battle = t.GetComponent<PlayerBattle>();
-			current_battle.init(combatants, this);
+			current_battle.init();
 		}
 	}
 	
 	[RPC]
-	public void add_player_end_turn_listener() {
-		current_battle.current_player.TurnOver += new EventHandler(PlayerEndTurn);	
-	}
-	
-	public void PlayerEndTurn(object sender, EventArgs e)
-	{
-		current_battle.current_player.TurnOver -= PlayerEndTurn;
-		current_battle.current_player.networkView.RPC("set_material", RPCMode.AllBuffered, current_battle.previous_unit_material);
-		current_battle.index++;
-		current_battle.index %= current_battle.players.Count;
-		current_battle.current_player = current_battle.players[current_battle.index];
-		current_battle.StartTurn(ref current_battle.current_player);
+	public void start_player_battle() {
+		if (Network.isServer) {
+			networkView.RPC("set_current_battle", RPCMode.AllBuffered);
+		}
 	}
 	
 	public void end_battle() {

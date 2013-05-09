@@ -42,6 +42,8 @@ public class Unit : MonoBehaviour
 	public int bleed_dmg;
 	public int bleed_timer;
 	
+	public List<Effect> effects = new List<Effect>();
+	
 	// THIS MUST BE SET
 	public int team = 0;
 	private
@@ -86,6 +88,10 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public void start_turn (string nvid)
 	{
+//		foreach (Effect e in effects) {
+//			if (e.type == Effect.TYPE.DPT)
+//				e.apply_effect(this);		
+//		}
 		if (is_bleeding && bleed_timer > 0) {
 			take_damage (bleed_dmg);
 			bleed_timer--;
@@ -113,8 +119,7 @@ public class Unit : MonoBehaviour
 	
 	[RPC]
 	public void show_menu_rpc(string nvid){
-		if (nvid == network_id)
-			show_menu();
+		show_menu();
 	}
 	
 	[RPC]

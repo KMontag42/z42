@@ -90,14 +90,14 @@ public class SelectionManager : MonoBehaviour
 		if (Network.isServer) {
 			GUI.Box(server_team_one_box, "");
 			GUILayout.BeginArea(server_team_one_box);
-			foreach (string u in gm.player_one_units) {
+			foreach (string u in gm.player_one_strings) {
 				GUILayout.Box(u);	
 			}
 			GUILayout.EndArea();
 			
 			GUI.Box(server_team_two_box, "");
 			GUILayout.BeginArea(server_team_two_box);
-			foreach (string u in gm.player_two_units) {
+			foreach (string u in gm.player_two_strings) {
 				GUILayout.Box(u);	
 			}
 			GUILayout.EndArea();
