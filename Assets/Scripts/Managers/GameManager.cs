@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
 	public int winner;
 	
 	public List<Unit> players = new List<Unit>();
-	public List<Unit> server_players = new List<Unit>();
 	public string player_one_id = "--";
 	public NetworkPlayer player_one;
 	public string player_two_id = "--";
@@ -36,9 +35,8 @@ public class GameManager : MonoBehaviour {
 		} else {
 			new_player.tag = "team_2";	
 		}
-		server_players.Add (new_player);
 		if (Network.isServer)
-			players.Remove(null);
+			players.Add (new_player);
 	}
 	
 	[RPC]
@@ -49,9 +47,9 @@ public class GameManager : MonoBehaviour {
 	
 	[RPC]
 	public void set_all_players() {
-		foreach (GameObject u in GameObject.FindGameObjectsWithTag("Player")) {
-			if (u.GetComponent<Unit>() != null)
-				players.Add(u.GetComponent<Unit>());
+		foreach (Unit u in GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[]) {
+			if (u != null)
+				players.Add(u);
 		}
 	}
 	
@@ -151,15 +149,14 @@ public class GameManager : MonoBehaviour {
 				
 				for(int i = 0; i < player_one_strings.Count; i++){
 					spawn_player(player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.connections[0]);
-					server_players.Remove(null);
 				}
 				
 				for(int i = 0; i < player_two_strings.Count; i++){
 					spawn_player(player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.connections[1]);
-					server_players.Remove(null);
 				}
 				
 				networkView.RPC("set_all_players", RPCMode.AllBuffered);
+				
 			}
 		}
 	}

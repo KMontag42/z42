@@ -98,6 +98,7 @@ public class PlayerBattle : MonoBehaviour
 		p.networkView.RPC("set_current_ap",RPCMode.AllBuffered, p._class.action_points);
 		bm.networkView.RPC("add_player_end_turn_listener", RPCMode.AllBuffered);
 		p.networkView.RPC ("show_menu_rpc", p.owner, current_player.network_id);
+		p.networkView.RPC ("show_team_frame_rpc", p.owner);
 		Debug.Log("Start turn AP: " + p.current_ap);
 	}
 	

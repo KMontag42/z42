@@ -143,6 +143,11 @@ public class Unit : MonoBehaviour
 		}
 	}
 	
+	[RPC]
+	public void show_team_frame_rpc() {
+		Camera.main.GetComponent<GUIOverlay>().showTeamFrame();
+	}
+	
 	public IEnumerator do_action (string _ind, ACTIONS action)
 	{
 		indicator = GameObject.Instantiate (Resources.Load ("Prefabs/" + _ind) as GameObject, transform.position, transform.rotation) as GameObject;

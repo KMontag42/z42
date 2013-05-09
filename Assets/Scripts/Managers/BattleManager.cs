@@ -78,6 +78,10 @@ public class BattleManager : MonoBehaviour {
 			GameObject t = Network.Instantiate(Resources.Load("Prefabs/PlayerBattle"), Vector3.zero, Quaternion.identity, 0) as GameObject;
 			current_battle = t.GetComponent<PlayerBattle>();
 			current_battle.init();
+		} else {
+			GameObject t = GameObject.Find("PlayerBattle(Clone)") as GameObject;
+			current_battle = t.GetComponent<PlayerBattle>();
+			current_battle.init();
 		}
 	}
 	

@@ -70,14 +70,10 @@ public class GUIOverlay : MonoBehaviour
 		
 		menu.visible = false;
 		
-		player_one_frame = new TeamFrame( bm.player_one_units );
-		stage.addChild(player_one_frame.frame);
-		
 	}
 
 	void Update ()
 	{
-
 	}
 
 	public static void showTooltip (Unit s_player, float x, float y)
@@ -87,7 +83,14 @@ public class GUIOverlay : MonoBehaviour
 		menu.x = x;
 		menu.y = y;
 	}
-
+	
+	public void showTeamFrame() {
+		if (bm.player_one_units.Count > 0) {
+			player_one_frame = new TeamFrame( bm.player_one_units );
+			stage.addChild(player_one_frame.frame);	
+		}
+	}
+	
 	public static void hideTooltip ()
 	{
 		menu.visible = false;
