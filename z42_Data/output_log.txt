@@ -1,25 +1,1510 @@
 Initialize engine version: 4.1.2f1 (911c7369eeac)
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 9.0c [nvumdshim.dll 9.18.13.1090]
-    Renderer: NVIDIA GeForce GT 650M 
-    Vendor:   NVIDIA
-    VRAM:     973 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 DF24=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1191]
+    Renderer: ATI Radeon HD 5800 Series
+    Vendor:   ATI
+    VRAM:     1017 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 DF24=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
-Platform assembly: C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\LibUniSWF.dll (this message is harmless)
-Loading C:\Users\gramp_000\Documents\GitHub\z42\z42_Data\Managed\LibUniSWF.dll into Unity Child Domain
-- Completed reload, in  0.173 seconds
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\LibUniSWF.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\LibUniSWF.dll into Unity Child Domain
+- Completed reload, in  0.101 seconds
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
 <RI> Initializing input.
 <RI> Input initialized.
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Boo.Lang.dll (this message is harmless)
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\UnityScript.Lang.dll (this message is harmless)
+0.3680157 OnMasterEevent: HostListReceived
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MultiplayerFunctions:OnMasterServerEvent(MasterServerEvent) (at E:\DEV\REVEL\z42\Assets\Plugins\MultiplayerFunctions.cs:297)
+ 
+(Filename: E Line: 0)
+
+Binding to local socket 0.0.0.0
+Sending NAT type detection request, local port 62295
+Initialize engine version: 4.1.2f1 (911c7369eeac)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1191]
+    Renderer: ATI Radeon HD 5800 Series
+    Vendor:   ATI
+    VRAM:     1017 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 DF24=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\LibUniSWF.dll (this message is harmless)
+Loading E:\DEV\REVEL\z42\z42_Data\Managed\LibUniSWF.dll into Unity Child Domain
+- Completed reload, in  0.066 seconds
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at -1920,0
+<RI> Initializing input.
+<RI> Input initialized.
+Returning nat detection result to the user
+TestConnection result: testedUseNat=True connectionTestResult=NATpunchthroughFullCone probingPublicIP=False hasTestedNAT=True testMessage=NAT punchthrough capable. Can connect to all servers and receive connections from all clients. Enabling NAT punchthrough functionality.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+<TestConnection>c__Iterator3:MoveNext() (at E:\DEV\REVEL\z42\Assets\Plugins\MultiplayerFunctions.cs:482)
+ 
+(Filename: E Line: 0)
+
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\Boo.Lang.dll (this message is harmless)
+Platform assembly: E:\DEV\REVEL\z42\z42_Data\Managed\UnityScript.Lang.dll (this message is harmless)
+Binding to local socket 0.0.0.0
+Sending NAT type detection request, local port 62299
+0.201936 OnMasterEevent: HostListReceived
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+MultiplayerFunctions:OnMasterServerEvent(MasterServerEvent) (at E:\DEV\REVEL\z42\Assets\Plugins\MultiplayerFunctions.cs:297)
+ 
+(Filename: E Line: 0)
+
+Server initialized and ready
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+csConnect:OnServerInitialized() (at E:\DEV\REVEL\z42\Assets\Scripts\Network\csConnect.cs:105)
+UnityEngine.Network:Internal_InitializeServerDeprecated(Int32, Int32)
+UnityEngine.Network:InitializeServer(Int32, Int32)
+csConnect:OnGUI() (at E:\DEV\REVEL\z42\Assets\Scripts\Network\csConnect.cs:45)
+ 
+(Filename: E Line: 0)
+
+Returning nat detection result to the user
+TestConnection result: testedUseNat=True connectionTestResult=NATpunchthroughFullCone probingPublicIP=False hasTestedNAT=True testMessage=NAT punchthrough capable. Can connect to all servers and receive connections from all clients. Enabling NAT punchthrough functionality.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+<TestConnection>c__Iterator3:MoveNext() (at E:\DEV\REVEL\z42\Assets\Plugins\MultiplayerFunctions.cs:482)
+ 
+(Filename: E Line: 0)
+
+Player connected from: 127.0.0.1:64138
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+csConnect:OnPlayerConnected(NetworkPlayer) (at E:\DEV\REVEL\z42\Assets\Scripts\Network\csConnect.cs:101)
+ 
+(Filename: E Line: 0)
+
+This CLIENT has connected to a server
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+csConnect:OnConnectedToServer() (at E:\DEV\REVEL\z42\Assets\Scripts\Network\csConnect.cs:87)
+ 
+(Filename: E Line: 0)
+
+Player connected from: 127.0.0.1:64139
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+csConnect:OnPlayerConnected(NetworkPlayer) (at E:\DEV\REVEL\z42\Assets\Scripts\Network\csConnect.cs:101)
+ 
+(Filename: E Line: 0)
+
+System memory in use before: 2.3 MB.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 2.1 MB.
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 208.
+Total: 0.767063 ms (FindLiveObjects: 0.018228 ms CreateObjectMapping: 0.014218 ms MarkObjects: 0.189213 ms  DeleteObjects: 0.007291 ms)
+
+System memory in use before: 2.3 MB.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 2.2 MB.
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 210.
+Total: 0.756126 ms (FindLiveObjects: 0.015676 ms CreateObjectMapping: 0.014947 ms MarkObjects: 0.181557 ms  DeleteObjects: 0.006926 ms)
+
+Null
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:init() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:26)
+BattleManager:set_current_battle() (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\BattleManager.cs:75)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[])
+BattleManager:start_player_battle() (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\BattleManager.cs:86)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[])
+BattleManager:init(List`1) (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\BattleManager.cs:66)
+GameManager:start_battle() (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:46)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[])
+GameManager:OnGUI() (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:130)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 3
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:StartBattle() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:80)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:StartBattle() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:80)
+ 
+(Filename: E Line: 0)
+
+BattleManager (BattleManager)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:init() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:26)
+BattleManager:set_current_battle() (at E:\DEV\REVEL\z42\Assets\Scripts\Managers\BattleManager.cs:79)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 3
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:StartBattle() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:80)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:StartBattle() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:80)
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+1
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:349)
+ 
+(Filename: E Line: 0)
+
+failed no units
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:368)
+ 
+(Filename: E Line: 0)
+
+gunner(Clone) team: 1 (Unit)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+GUIOverlay:onMoveButton(CEvent) (at E:\DEV\REVEL\z42\Assets\Scripts\GUI\GUIOverlay.cs:121)
+pumpkin.events.EventDelegate:Invoke(CEvent)
+pumpkin.events.EventDispatcher:dispatchEvent(CEvent)
+pumpkin.display.DisplayObject:childFireBubblingEvent(CEvent)
+pumpkin.display.DisplayObject:fireEvent(CEvent)
+MovieClipOverlayCameraBehaviour:_handleMouseReleaseClick(DisplayObject, DisplayObject, Vector2)
+MovieClipOverlayCameraBehaviour:handleMouseInputState(Vector2, Boolean)
+MovieClipOverlayCameraBehaviour:handleUserInput()
+MovieClipOverlayCameraBehaviour:OnUpdate()
+PumpkinBehaviour:Update()
+ 
+(Filename: E Line: 0)
+
+2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:349)
+ 
+(Filename: E Line: 0)
+
+attacking targetting: gunner(Clone) team: 2 (Unit)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+Unit:attack_target(Unit) (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:514)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:457)
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:349)
+ 
+(Filename: E Line: 0)
+
+attacking targetting: theif(Clone) team: 2 (Unit)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+Unit:attack_target(Unit) (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:514)
+<do_action>c__Iterator2:MoveNext() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:457)
+ 
+(Filename: E Line: 0)
+
+sharing damage
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+Unit:take_damage(Int32) (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:149)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[])
+Unit:request_to_damage(Int32) (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:274)
+ 
+(Filename: E Line: 0)
+
+sharing damage
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+Unit:take_damage(Int32) (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:149)
+ 
+(Filename: E Line: 0)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Unit.take_damage (Int32 dmg) [0x00015] in E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:150 
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 2
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+player end turn
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:125)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+Start turn AP: 3
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:108)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+listener added
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UnityEngine.MonoBehaviour:print(Object)
+PlayerBattle:add_player_end_turn_listener() (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:117)
+PlayerBattle:StartTurn(Unit&) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:109)
+PlayerBattle:PlayerEndTurn(Object, EventArgs) (at E:\DEV\REVEL\z42\Assets\Scripts\PlayerBattle.cs:132)
+Unit:OnTurnOver() (at E:\DEV\REVEL\z42\Assets\Scripts\Units\Unit.cs:59)
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x00085] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:134 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+
+IndexOutOfRangeException: Array index is out of range.
+  at GameManager.OnGUI () [0x0005b] in E:\DEV\REVEL\z42\Assets\Scripts\Managers\GameManager.cs:133 
+ 
+(Filename: E Line: 0)
+

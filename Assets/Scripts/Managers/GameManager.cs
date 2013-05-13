@@ -25,18 +25,19 @@ public class GameManager : MonoBehaviour {
 	
 	public void spawn_player(string unit, Vector3 spawn_position, int player, NetworkPlayer network_player)
 	{
-		GameObject new_player_transform = Network.Instantiate(Resources.Load(unit),spawn_position,Quaternion.identity, player + 1) as GameObject;
-		Unit new_player = new_player_transform.GetComponent<Unit>();
-		new_player.networkView.RPC ("set_owner", RPCMode.AllBuffered, network_player);
-		new_player.networkView.RPC ("set_material", RPCMode.AllBuffered, player + 1);
-		new_player.networkView.RPC ("set_team", RPCMode.AllBuffered, player + 1);
-		if (player == 0) {
-			new_player.tag = "team_1";
-		} else {
-			new_player.tag = "team_2";	
+		if (Network.isServer) {
+			GameObject new_player_transform = Network.Instantiate(Resources.Load(unit),spawn_position,Quaternion.identity, player + 1) as GameObject;
+			Unit new_player = new_player_transform.GetComponent<Unit>();
+			new_player.networkView.RPC ("set_owner", RPCMode.AllBuffered, network_player);
+			new_player.networkView.RPC ("set_material", RPCMode.AllBuffered, player + 1);
+			new_player.networkView.RPC ("set_team", RPCMode.AllBuffered, player + 1);
+			if (player == 0) {
+				new_player.tag = "team_1";
+			} else {
+				new_player.tag = "team_2";	
+			}
+			//players.Add (new_player);
 		}
-		if (Network.isServer)
-			players.Add (new_player);
 	}
 	
 	[RPC]
@@ -123,18 +124,24 @@ public class GameManager : MonoBehaviour {
 		if (Application.loadedLevelName == "battle_test") {
 			Network.isMessageQueueRunning = true;
 			GUILayout.BeginVertical();
-			if (Network.isServer)
+			if (Network.isServer) {
 				if (GUILayout.Button ("Start Battle"))
 				{
-					networkView.RPC("start_battle", RPCMode.AllBuffered);	
+					networkView.RPC("start_battle", RPCMode.AllBuffered);
 				}
+					
+				GUILayout.Label("Player one: "+Network.connections[0]);
+				GUILayout.Label("Player two: "+Network.connections[1]);
+			}
 			GUILayout.Label("Player guid: "+Network.player.guid);
+			GUILayout.Label("Length of Players: "+players.Count);
 		}
 	}
 	
 	[RPC]
 	void OnLevelWasLoadedRPC() {
-		OnLevelWasLoaded();	
+		if (Network.isServer)
+			OnLevelWasLoaded();	
 	}
 	
 	void OnLevelWasLoaded() {
@@ -185,6 +192,6 @@ public class GameManager : MonoBehaviour {
 		Network.SetSendingEnabled(0, true);
 
 		if (Network.isServer)
-			networkView.RPC("OnLevelWasLoadedRPC", RPCMode.AllBuffered);	
+			networkView.RPC("OnLevelWasLoadedRPC", RPCMode.Server);	
 	}
 }

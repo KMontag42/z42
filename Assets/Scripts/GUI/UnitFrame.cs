@@ -16,7 +16,4 @@ public class UnitFrame {
 		unit_name = frame.getChildByName("unit_name") as TextField;
 		unit_name.text = unit.name;
 	}
-	
-
-
 }

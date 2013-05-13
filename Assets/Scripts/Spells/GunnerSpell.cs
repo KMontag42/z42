@@ -25,13 +25,7 @@ public class GunnerSpell : Spell
 	
 	public override void perform_spell (Unit caster, Unit target)
 	{
-		target.is_bleeding = true;
-		target.bleed_dmg = effect_damage;
-		target.bleed_timer = 3;
-		GameObject g = GameObject.Instantiate (Resources.Load ("Prefabs/" + effect), caster.transform.position, Quaternion.identity) as GameObject;
-		iTween.MoveTo (g, target.transform.position, .2f);
-		GameObject p = GameObject.Instantiate(Resources.Load("Prefabs/"+target_effect), target.transform.position, Quaternion.identity) as GameObject;
-		p.transform.parent = target.transform;
+		target.networkView.RPC("request_gunner_spell_rpc", RPCMode.Server, effect_damage, effect, target_effect, caster.transform.position, 1);
 	}
 }
 

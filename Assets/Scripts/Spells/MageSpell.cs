@@ -25,7 +25,7 @@ public class MageSpell : Spell
 	
 	public override void perform_spell(Unit caster, Unit target)
 	{
-		target.take_damage(effect_damage);
+		target.networkView.RPC("request_to_damage", RPCMode.Server, effect_damage);
 		GameObject g = GameObject.Instantiate(Resources.Load("Prefabs/"+effect), target.transform.position, Quaternion.identity) as GameObject;
 	}
 }

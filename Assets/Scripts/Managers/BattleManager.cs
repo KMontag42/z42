@@ -14,13 +14,8 @@ public class BattleManager : MonoBehaviour {
 	
 	
 	public GameManager gm;
-	int current_unit_index = 0;
-	Rect ap_box = new Rect(50, 50, 150, 75);
 	Rect team_1_hp_area = new Rect(Screen.width - 300, 50, 250, 75);
-	Rect team_2_hp_area = new Rect(Screen.width - 300, 150, 250, 75);
-	
-	Rect full_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
-	Rect current_hp_box = new Rect(Screen.width - 300, 50, 250, 50);
+	Rect team_2_hp_area = new Rect(Screen.width - 300, 150, 250, 75); 
 	
 	void Start() {
 		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -104,11 +99,11 @@ public class BattleManager : MonoBehaviour {
 	public void OnGUI() 
 	{
 		if (current_battle != null){
-			GUILayout.BeginArea(ap_box);
-			for (int i = 0; i < current_battle.current_player.current_ap; i++) {
-				GUILayout.Box("AP");	
-			}
-			GUILayout.EndArea();
+//			GUILayout.BeginArea(ap_box);
+//			for (int i = 0; i < current_battle.current_player.current_ap; i++) {
+//				GUILayout.Box("AP");	
+//			}
+//			GUILayout.EndArea();
 			
 			GUI.Box(team_1_hp_area, "");
 			GUILayout.BeginArea(team_1_hp_area);

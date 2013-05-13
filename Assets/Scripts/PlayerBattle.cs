@@ -19,10 +19,10 @@ public class PlayerBattle : MonoBehaviour
 	
 	public void init ()
 	{
-		networkView.RPC("set_battle_manager", RPCMode.AllBuffered);
-		networkView.RPC("set_players", RPCMode.AllBuffered);
-		networkView.RPC ("OrderTurns", RPCMode.AllBuffered);
-		networkView.RPC ("StartBattle", RPCMode.AllBuffered);
+		networkView.RPC("set_battle_manager", RPCMode.Server);
+		networkView.RPC("set_players", RPCMode.Server);
+		networkView.RPC ("OrderTurns", RPCMode.Server);
+		networkView.RPC ("StartBattle", RPCMode.Server);
 		Debug.Log(bm);
 	}
 	
@@ -72,9 +72,13 @@ public class PlayerBattle : MonoBehaviour
 	[RPC]
 	private void StartBattle()
 	{
-		networkView.RPC("set_index", RPCMode.AllBuffered, 0);
-		networkView.RPC("set_current_player", RPCMode.AllBuffered, index);
-		StartTurn(ref current_player);
+		if (Network.isServer) {
+			//networkView.RPC("set_index", RPCMode.Server, 0);
+			//networkView.RPC("set_current_player", RPCMode.Server, index);
+			index = 0;
+			current_player = players[index];
+			StartTurn(ref current_player);
+		}
 	}
 	
 	[RPC]
@@ -84,37 +88,49 @@ public class PlayerBattle : MonoBehaviour
 	
 	[RPC]
 	private void set_current_player(int i) {
-		current_player = players[i];	
+		try {
+			current_player = players[i];
+		} catch (ArgumentOutOfRangeException e) {
+			print (e + " from: " + Network.player);	
+		}
 	}
 	
 	public void StartTurn(ref Unit p)
 	{
-		if (p.renderer.material.color.r == 255)
-			previous_unit_material = 1;
-		else if (p.renderer.material.color.b == 255)
-			previous_unit_material = 2;
-		p.networkView.RPC("start_turn", RPCMode.AllBuffered, Network.player.guid);
-		p.networkView.RPC("set_material", RPCMode.AllBuffered, selected_unit_material);
-		p.networkView.RPC("set_current_ap",RPCMode.AllBuffered, p._class.action_points);
-		bm.networkView.RPC("add_player_end_turn_listener", RPCMode.AllBuffered);
-		p.networkView.RPC ("show_menu_rpc", p.owner, current_player.network_id);
-		p.networkView.RPC ("show_team_frame_rpc", p.owner);
-		Debug.Log("Start turn AP: " + p.current_ap);
+		if (Network.isServer) {
+			if (p.renderer.material.color.r == 255)
+				previous_unit_material = 1;
+			else if (p.renderer.material.color.b == 255)
+				previous_unit_material = 2;
+			p.networkView.RPC("set_current_ap", RPCMode.AllBuffered, p._class.action_points);
+			p.networkView.RPC("set_material", RPCMode.AllBuffered, selected_unit_material);
+			p.networkView.RPC ("show_team_frame_rpc", p.owner);
+			Debug.Log("Start turn AP: " + p.current_ap);
+			add_player_end_turn_listener();
+			p.networkView.RPC("start_turn", p.owner);
+		}
 	}
 	
-	[RPC]
 	public void add_player_end_turn_listener() {
-		current_player.TurnOver += new EventHandler(PlayerEndTurn);	
+		try {
+			current_player.TurnOver += new EventHandler(PlayerEndTurn);	
+			print ("listener added");
+		} catch (NullReferenceException e) {
+			print (e + " from: " + Network.player);
+		}
 	}
 	
 	public void PlayerEndTurn(object sender, EventArgs e)
 	{
+		print ("player end turn");
 		current_player.TurnOver -= PlayerEndTurn;
-		current_player.networkView.RPC("set_material", RPCMode.AllBuffered, previous_unit_material);
-		networkView.RPC("set_index", RPCMode.AllBuffered, index+1);
-		networkView.RPC("set_index", RPCMode.AllBuffered, index % players.Count);
-		networkView.RPC("set_current_player", RPCMode.AllBuffered, index);
-		StartTurn(ref current_player);
+		if (Network.isServer) {
+			current_player.networkView.RPC("set_material", RPCMode.AllBuffered, current_player.team);
+			index = (index + 1) % players.Count;
+			current_player = players[index];
+			
+			StartTurn(ref current_player);
+		}
 	}
 	
 }

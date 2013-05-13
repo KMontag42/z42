@@ -24,10 +24,7 @@ public class TheifSpell : Spell
 	{
 		if (caster == target)
 		{
-			caster.boost_dmg = true;
-			caster.boost_percent = effect_damage;
-			GameObject g = GameObject.Instantiate(Resources.Load("Prefabs/"+effect), caster.transform.position, Quaternion.identity) as GameObject;
-			g.transform.parent = caster.transform;
+			caster.networkView.RPC("request_theif_spell_rpc", RPCMode.Server, 1, effect_damage, effect);
 		}
 	}
 }

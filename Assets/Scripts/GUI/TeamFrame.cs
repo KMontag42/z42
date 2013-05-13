@@ -31,7 +31,8 @@ public class TeamFrame {
 			frame.addChild(unit_frame.frame);
 			unit_frame.frame.x = 0;
 			unit_frame.frame.y = yPos;
-			yPos += unit_frame.frame.srcHeight;
+//			yPos += unit_frame.frame.srcHeight;
+			yPos += 150;
 		}
 	}
 	

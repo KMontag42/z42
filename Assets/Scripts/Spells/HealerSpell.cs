@@ -25,11 +25,7 @@ public class HealerSpell : Spell
 	
 	public override void perform_spell(Unit caster, Unit target)
 	{
-		target.is_bleeding = false;
-		target.bleed_dmg = 0;
-		target.bleed_timer = 0;
-		GameObject g = GameObject.Instantiate(Resources.Load("Prefabs/"+effect), target.transform.position, Quaternion.identity) as GameObject;
-		GameObject.Destroy(target.transform.FindChild("poison_effect(Clone)").gameObject);
+		target.networkView.RPC("request_healer_spell_rpc", RPCMode.Server, effect);
 	}
 }
 

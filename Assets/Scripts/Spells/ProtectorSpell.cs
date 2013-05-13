@@ -10,7 +10,7 @@ public class ProtectorSpell : Spell
 		spell_range = 10;
 		spell_area = 1;
 		type = Spell.TYPE.ALLY;
-		effect = "Ground Vortex";
+		effect = "protector_effect";
 	}
 	
 	public ProtectorSpell(int e_d, int s_r, int s_a, TYPE t)
@@ -19,19 +19,13 @@ public class ProtectorSpell : Spell
 		spell_range = s_r;
 		spell_area = s_a;
 		type = t;
-		effect = "Ground Vortex";
+		effect = "protector_effect";
 	}
 	
 	override public void perform_spell(Unit caster, Unit target)
 	{
 		Debug.Log("performing protectorspell from "+caster+" on "+target);
-		if (!target.sharing_dmg){
-			target.sharing_dmg = true;
-			target.sharing_dmg_with = caster;
-			target.sharing_percent = effect_damage;
-			GameObject g = GameObject.Instantiate(Resources.Load("Prefabs/"+effect), target.transform.position, Quaternion.identity) as GameObject;
-			g.transform.parent = target.transform;
-		}
+		target.networkView.RPC("request_protector_spell_rpc", RPCMode.Server, effect_damage, effect, 1);
 	}
 }
 
