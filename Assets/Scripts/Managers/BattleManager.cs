@@ -24,29 +24,33 @@ public class BattleManager : MonoBehaviour {
 	
 	void Update() {
 		if (combatants.Count > 0) {
-			foreach (Unit c in combatants) {
-				if (c._class.hp <= 0)
-				{
-					combatants.Remove(c);
-					
-					if (c.team == 1)
-						player_one_units.Remove(c);
-					else if (c.team == 2)
-						player_two_units.Remove(c);
-					
-					Destroy(c.gameObject);
-					print (combatants.Count);
+			try {
+				foreach (Unit c in combatants) {
+					if (c._class.hp <= 0)
+					{
+						combatants.Remove(c);
+						
+						if (c.team == 1)
+							player_one_units.Remove(c);
+						else if (c.team == 2)
+							player_two_units.Remove(c);
+						
+						Destroy(c.gameObject);
+						print (combatants.Count);
+					}
 				}
-			}
-			
-			if (player_one_units.Count == 0) {
-				gm.winner = 2;
-				end_battle();	
-			}
-			
-			if (player_two_units.Count == 0) {
-				gm.winner = 1;
-				end_battle();
+				
+				if (player_one_units.Count == 0) {
+					gm.winner = 2;
+					end_battle();	
+				}
+				
+				if (player_two_units.Count == 0) {
+					gm.winner = 1;
+					end_battle();
+				}
+			} catch (InvalidOperationException e) {
+				print (e + " from: " + Network.player);
 			}
 		}
 	}

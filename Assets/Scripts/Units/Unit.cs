@@ -17,12 +17,13 @@ public class Unit : MonoBehaviour
 	public int current_ap;
 	public int speed;
 	public UnitClass _class;
+	public NavMeshAgent nma;
 
 	public event EventHandler TurnOver;
 
 	public NetworkViewID viewID;
 	public NetworkPlayer owner;
-	public string network_id;
+	public int special_id;
 	public bool menu_showing = false;
 	public bool defending = false;
 	public LayerMask grab_layer;
@@ -99,13 +100,20 @@ public class Unit : MonoBehaviour
 	public void set_team (int _team)
 	{
 		team = _team;
+		if (team == 1)
+			tag = "team_1";
+		else if (team == 2)
+			tag = "team_2";
+		else
+			print ("error in set_team from: " + Network.player);
 	}
 	
 	[RPC]
 	public void set_owner (NetworkPlayer player)
 	{
+		System.Random r = new System.Random();
 		owner = player;
-		network_id = player.ToString();
+		special_id = r.Next();
 	}
 	
 	[RPC]
@@ -161,7 +169,7 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void move_to (Vector3 pos, float t)
 	{		
-		iTween.MoveTo (gameObject, iTween.Hash ("x", pos.x, "y", pos.y, "z", pos.z, "easeType", "easeInOutQuad"));
+		nma.SetDestination(pos);
 		
 		if (current_ap > 0) {
 			if (Network.player == owner)
@@ -172,19 +180,19 @@ public class Unit : MonoBehaviour
 	}
 	
 	[RPC]
-	public virtual void request_protector_spell_rpc(int percent, string effect, int protect_bool) {
+	public virtual void request_protector_spell_rpc(int percent, string effect, int protect_bool, int target_id) {
 		//validate here
-		networkView.RPC("protector_spell_rpc", RPCMode.AllBuffered, percent, effect, protect_bool);
+		networkView.RPC("protector_spell_rpc", RPCMode.AllBuffered, percent, effect, protect_bool, target_id);
 	}
 	
 	[RPC]
-	public virtual void protector_spell_rpc(int percent, string effect, int protect_bool) {
+	public virtual void protector_spell_rpc(int percent, string effect, int protect_bool, int target_id) {
 		if (protect_bool == 1){
 			sharing_dmg = true;
 			sharing_percent = percent;
 			// this works because this is only called from the target of the active player
 			// le sigh...
-			sharing_dmg_with = bm.current_battle.current_player;
+			sharing_dmg_with = bm.gm.players[target_id];
 			GameObject g = GameObject.Instantiate(Resources.Load("Prefabs/"+effect), transform.position, Quaternion.identity) as GameObject;
 			g.transform.parent = transform;	
 		} else if (protect_bool == 2) {
@@ -277,7 +285,6 @@ public class Unit : MonoBehaviour
 	
 	void Awake ()
 	{
-		DontDestroyOnLoad (gameObject);
 	}
 	
 	// Use this for initialization
@@ -285,8 +292,8 @@ public class Unit : MonoBehaviour
 	{
 		_class = gameObject.GetComponent<UnitClass> ();
 		current_ap = 0;
-		network_id = Network.player.guid;
 		bm = GameObject.Find ("BattleManager").GetComponent<BattleManager> ();
+		nma = GetComponent<NavMeshAgent>();
 		name = name + " team: " + team;
 	}
 	

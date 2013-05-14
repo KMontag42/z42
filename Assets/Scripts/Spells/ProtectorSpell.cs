@@ -25,7 +25,7 @@ public class ProtectorSpell : Spell
 	override public void perform_spell(Unit caster, Unit target)
 	{
 		Debug.Log("performing protectorspell from "+caster+" on "+target);
-		target.networkView.RPC("request_protector_spell_rpc", RPCMode.Server, effect_damage, effect, 1);
+		target.networkView.RPC("request_protector_spell_rpc", RPCMode.Server, effect_damage, effect, 1, caster.special_id);
 	}
 }
 

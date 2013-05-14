@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 	
 	BattleManager bm;
 	
-	public void spawn_player(string unit, Vector3 spawn_position, int player, NetworkPlayer network_player)
+	public void spawn_player(string unit, Vector3 spawn_position, int player, NetworkPlayer network_player, int _index)
 	{
 		if (Network.isServer) {
 			GameObject new_player_transform = Network.Instantiate(Resources.Load(unit),spawn_position,Quaternion.identity, player + 1) as GameObject;
@@ -48,9 +48,15 @@ public class GameManager : MonoBehaviour {
 	
 	[RPC]
 	public void set_all_players() {
-		foreach (Unit u in GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[]) {
-			if (u != null)
-				players.Add(u);
+//		foreach (Unit u in GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[]) {
+//			if (u != null) {
+//				players.Add(u);
+//			}
+//		}
+		Unit[] gos = GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[];
+		for (int i = 0; i < gos.Length; i++) {
+			players.Add (gos[i]);
+			gos[i].special_id = i;
 		}
 	}
 	
@@ -155,11 +161,11 @@ public class GameManager : MonoBehaviour {
 				networkView.RPC("set_team_materials", RPCMode.AllBuffered);
 				
 				for(int i = 0; i < player_one_strings.Count; i++){
-					spawn_player(player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.connections[0]);
+					spawn_player(player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.connections[0], i);
 				}
 				
 				for(int i = 0; i < player_two_strings.Count; i++){
-					spawn_player(player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.connections[1]);
+					spawn_player(player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.connections[1], i+player_one_strings.Count);
 				}
 				
 				networkView.RPC("set_all_players", RPCMode.AllBuffered);
