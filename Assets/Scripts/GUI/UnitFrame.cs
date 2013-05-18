@@ -14,6 +14,7 @@ public class UnitFrame {
 		this.unit = unit;	
 		frame = new MovieClip ("Flash GUI/game_gui.swf:unit_frame");
 		unit_name = frame.getChildByName("unit_name") as TextField;
-		unit_name.text = unit.name;
+		unit_name.text = "8====D";
+		unit_name.colorTransform = Color.black;
 	}
 }

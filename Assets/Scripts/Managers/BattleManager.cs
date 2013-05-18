@@ -12,6 +12,8 @@ public class BattleManager : MonoBehaviour {
 	public List<Unit> player_one_units = new List<Unit>();
 	public List<Unit> player_two_units = new List<Unit>();
 	
+	private List<Unit> to_remove = new List<Unit>();
+	
 	
 	public GameManager gm;
 	Rect team_1_hp_area = new Rect(Screen.width - 300, 50, 250, 75);
@@ -28,17 +30,23 @@ public class BattleManager : MonoBehaviour {
 				foreach (Unit c in combatants) {
 					if (c._class.hp <= 0)
 					{
-						combatants.Remove(c);
+						to_remove.Add(c);
 						
-						if (c.team == 1)
-							player_one_units.Remove(c);
-						else if (c.team == 2)
-							player_two_units.Remove(c);
 						
-						Destroy(c.gameObject);
-						print (combatants.Count);
 					}
 				}
+				
+				foreach (Unit u in to_remove) {
+					combatants.Remove(u);
+					if (u.team == 1)
+						player_one_units.Remove(u);
+					else if (u.team == 2)
+						player_two_units.Remove(u);
+					
+					Destroy(u.gameObject);	
+				}
+				
+				to_remove.Clear();
 				
 				if (player_one_units.Count == 0) {
 					gm.winner = 2;
@@ -67,7 +75,7 @@ public class BattleManager : MonoBehaviour {
 		}
 		in_battle = true;
 		if (Network.isServer)
-			networkView.RPC("start_player_battle", RPCMode.AllBuffered);
+			networkView.RPC("start_player_battle", RPCMode.All);
 		battles.Add(current_battle);
 	}
 	
@@ -87,7 +95,7 @@ public class BattleManager : MonoBehaviour {
 	[RPC]
 	public void start_player_battle() {
 		if (Network.isServer) {
-			networkView.RPC("set_current_battle", RPCMode.AllBuffered);
+			networkView.RPC("set_current_battle", RPCMode.All);
 		}
 	}
 	
@@ -102,25 +110,25 @@ public class BattleManager : MonoBehaviour {
 	
 	public void OnGUI() 
 	{
-		if (current_battle != null){
+//		if (current_battle != null){
 //			GUILayout.BeginArea(ap_box);
 //			for (int i = 0; i < current_battle.current_player.current_ap; i++) {
 //				GUILayout.Box("AP");	
 //			}
 //			GUILayout.EndArea();
-			
-			GUI.Box(team_1_hp_area, "");
-			GUILayout.BeginArea(team_1_hp_area);
-			foreach (Unit u in player_one_units) {
-				GUILayout.Box("Team 1: "+u.name+" HP: "+u._class.hp);
-			}
-			GUILayout.EndArea();
-			GUI.Box(team_2_hp_area, "");
-			GUILayout.BeginArea(team_2_hp_area);
-			foreach (Unit u in player_two_units) {
-				GUILayout.Box("Team 2: "+u.name+" HP: "+u._class.hp);
-			}
-			GUILayout.EndArea();
-		}
+//			
+//			GUI.Box(team_1_hp_area, "");
+//			GUILayout.BeginArea(team_1_hp_area);
+//			foreach (Unit u in player_one_units) {
+//				GUILayout.Box("Team 1: "+u.name+" HP: "+u._class.hp);
+//			}
+//			GUILayout.EndArea();
+//			GUI.Box(team_2_hp_area, "");
+//			GUILayout.BeginArea(team_2_hp_area);
+//			foreach (Unit u in player_two_units) {
+//				GUILayout.Box("Team 2: "+u.name+" HP: "+u._class.hp);
+//			}
+//			GUILayout.EndArea();
+//		}
 	}
 }

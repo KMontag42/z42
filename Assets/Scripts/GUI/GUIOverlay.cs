@@ -22,12 +22,15 @@ public class GUIOverlay : MonoBehaviour
 		static Unit selected_player;
 		GameManager gm;
 		BattleManager bm;
+		EventManager em;
 		TeamFrame player_one_frame;
 		
 	void Start ()
 	{
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 		bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+		em = GameObject.Find("EventManager").GetComponent<EventManager>();
+		
 		// validate MovieClipOverlayCameraBehaviour ist attached to camera
 		if (MovieClipOverlayCameraBehaviour.instance == null) {
 			return;
@@ -70,6 +73,7 @@ public class GUIOverlay : MonoBehaviour
 		
 		menu.visible = false;
 		
+		em.UnitsReadyEvent += make_team_frame;
 	}
 
 	void Update ()
@@ -80,14 +84,22 @@ public class GUIOverlay : MonoBehaviour
 	{
 		selected_player = s_player;
 		menu.visible = true;
+//		menu.x = Screen.height / 4;
+//		menu.y = Screen.width / 2;
 		menu.x = x;
 		menu.y = y;
 	}
 	
+	public void make_team_frame() {
+		player_one_frame = new TeamFrame( bm.player_one_units );
+		player_one_frame.frame.scaleX = .5f;
+		player_one_frame.frame.scaleY = .5f;
+		stage.addChild(player_one_frame.frame);		
+	}
+	
 	public void showTeamFrame() {
 		if (bm.player_one_units.Count > 0) {
-			player_one_frame = new TeamFrame( bm.player_one_units );
-			stage.addChild(player_one_frame.frame);	
+			player_one_frame.frame.visible = true;
 		}
 	}
 	

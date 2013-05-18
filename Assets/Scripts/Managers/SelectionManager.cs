@@ -24,23 +24,11 @@ public class SelectionManager : MonoBehaviour
 		gm = GameObject.Find ("GameManager").GetComponent<GameManager> () as GameManager;
 	}
 	
-	public void OnConnectedToServer() {
-		if (Network.isClient)
-		{
-			if (gm.player_one_id == "--"){
-				gm.networkView.RPC("set_player_id", RPCMode.AllBuffered, Network.player.guid);
-				gm.networkView.RPC("set_player", RPCMode.AllBuffered, Network.player, 1);
-			} else if (gm.player_two_id == "--") {
-				gm.networkView.RPC("set_player_id", RPCMode.AllBuffered, Network.player.guid);
-				gm.networkView.RPC("set_player", RPCMode.AllBuffered, Network.player, 2);
-			}
-		}	
-	}
 	// Update is called once per frame
 	void Update ()
 	{
-		if (gm.player_one_ready && gm.player_two_ready) {
-			gm.networkView.RPC( "LoadLevel", RPCMode.AllBuffered, "battle_test", gm.lastLevelPrefix + 1);	
+		if (gm.player_one_ready && gm.player_two_ready && Network.isServer) {
+			gm.networkView.RPC( "LoadLevel", RPCMode.All, "battle_test", gm.lastLevelPrefix + 1);	
 		}
 	}
 	
@@ -52,30 +40,30 @@ public class SelectionManager : MonoBehaviour
 				GUI.Box (player_box, "Player Select");
 				GUI.Box (points_left_box, "Points left: " + player_one_points);
 				if (GUI.Button (prot_box, "Protector\n" + ProtectorClass.cost + " points\nRectangle")) {
-					gm.networkView.RPC("add_unit_from_player", RPCMode.AllBuffered, Network.player.guid, "Prefabs/protector");
+					gm.networkView.RPC("add_unit_from_player", RPCMode.All, Network.player.guid, "Prefabs/protector");
 					player_one_points -= ProtectorClass.cost;
 				}
 				if (GUI.Button (thf_box, "Theif\n" + TheifClass.cost + " points\nSquare")) {
 					if (player_one_points > TheifClass.cost) {
-						gm.networkView.RPC("add_unit_from_player", RPCMode.AllBuffered, Network.player.guid, "Prefabs/theif");
+						gm.networkView.RPC("add_unit_from_player", RPCMode.All, Network.player.guid, "Prefabs/theif");
 						player_one_points -= TheifClass.cost;
 					}
 				}
 				if (GUI.Button (gun_box, "Gunner\n" + GunnerClass.cost + " points\nCylinder")) {
 					if (player_one_points > GunnerClass.cost) {
-						gm.networkView.RPC("add_unit_from_player", RPCMode.AllBuffered, Network.player.guid, "Prefabs/gunner");
+						gm.networkView.RPC("add_unit_from_player", RPCMode.All, Network.player.guid, "Prefabs/gunner");
 						player_one_points -= GunnerClass.cost;
 					}
 				}
 				if (GUI.Button (mage_box, "Mage\n" + MageClass.cost + " points\nCapsule")) {
 					if (player_one_points > MageClass.cost) {
-						gm.networkView.RPC("add_unit_from_player", RPCMode.AllBuffered, Network.player.guid, "Prefabs/mage");
+						gm.networkView.RPC("add_unit_from_player", RPCMode.All, Network.player.guid, "Prefabs/mage");
 						player_one_points -= MageClass.cost;
 					}
 				}
 				if (GUI.Button (heal_box, "Healer\n" + HealerClass.cost + " points\nSphere")) {
 					if (player_one_points > HealerClass.cost) {
-						gm.networkView.RPC("add_unit_from_player", RPCMode.AllBuffered, Network.player.guid, "Prefabs/healer");
+						gm.networkView.RPC("add_unit_from_player", RPCMode.All, Network.player.guid, "Prefabs/healer");
 						player_one_points -= HealerClass.cost;
 					}
 				}
@@ -83,7 +71,7 @@ public class SelectionManager : MonoBehaviour
 					player_one_points = 0;	
 				}
 			} else {
-				gm.networkView.RPC("set_player_ready", RPCMode.AllBuffered, Network.player.guid);
+				gm.networkView.RPC("set_player_ready", RPCMode.All, Network.player.guid);
 			}
 		}
 		

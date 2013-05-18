@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerBattle : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerBattle : MonoBehaviour
 	public int selected_unit_material = 0;
 	public int previous_unit_material;
 	public BattleManager bm;
+	public EventManager em;
 	
 	public void Start() {}
 	
@@ -21,14 +23,13 @@ public class PlayerBattle : MonoBehaviour
 	{
 		networkView.RPC("set_battle_manager", RPCMode.Server);
 		networkView.RPC("set_players", RPCMode.Server);
-		networkView.RPC ("OrderTurns", RPCMode.Server);
 		networkView.RPC ("StartBattle", RPCMode.Server);
-		Debug.Log(bm);
 	}
 	
 	[RPC]
 	public void set_battle_manager() {
 		bm = GameObject.Find("BattleManager").GetComponent<BattleManager>();
+		em = GameObject.Find("EventManager").GetComponent<EventManager>();
 	}
 	
 	[RPC]
@@ -48,7 +49,7 @@ public class PlayerBattle : MonoBehaviour
 			if (y == null) {
 				return 1;
 			} else {
-				bool x_y = x._class.speed > y._class.speed;
+				bool x_y = x._class.speed >= y._class.speed;
 				bool y_x = y._class.speed > x._class.speed;
 				//bool eq = x.stats[4].ModValue == y.stats[4].ModValue;
 				
@@ -63,12 +64,6 @@ public class PlayerBattle : MonoBehaviour
 		}
 	}
 	
-	[RPC]	
-	private void OrderTurns()
-	{
-		players.Sort(CompareBySpeed);
-	}
-	
 	[RPC]
 	private void StartBattle()
 	{
@@ -77,8 +72,14 @@ public class PlayerBattle : MonoBehaviour
 			//networkView.RPC("set_current_player", RPCMode.Server, index);
 			index = 0;
 			current_player = players[index];
+			networkView.RPC ("units_ready_event_rpc",RPCMode.Others);
 			StartTurn(ref current_player);
 		}
+	}
+	
+	[RPC]
+	private void units_ready_event_rpc () {
+		em.OnUnitsReady();
 	}
 	
 	[RPC]
@@ -102,8 +103,8 @@ public class PlayerBattle : MonoBehaviour
 				previous_unit_material = 1;
 			else if (p.renderer.material.color.b == 255)
 				previous_unit_material = 2;
-			p.networkView.RPC("set_current_ap", RPCMode.AllBuffered, p._class.action_points);
-			p.networkView.RPC("set_material", RPCMode.AllBuffered, selected_unit_material);
+			p.networkView.RPC("set_current_ap", RPCMode.All, p._class.action_points);
+			p.networkView.RPC("set_material", RPCMode.All, selected_unit_material);
 			p.networkView.RPC ("show_team_frame_rpc", p.owner);
 			Debug.Log("Start turn AP: " + p.current_ap);
 			add_player_end_turn_listener();
@@ -114,7 +115,6 @@ public class PlayerBattle : MonoBehaviour
 	public void add_player_end_turn_listener() {
 		try {
 			current_player.TurnOver += new EventHandler(PlayerEndTurn);	
-			print ("listener added");
 		} catch (NullReferenceException e) {
 			print (e + " from: " + Network.player);
 		}
@@ -122,10 +122,9 @@ public class PlayerBattle : MonoBehaviour
 	
 	public void PlayerEndTurn(object sender, EventArgs e)
 	{
-		print ("player end turn");
 		current_player.TurnOver -= PlayerEndTurn;
 		if (Network.isServer) {
-			current_player.networkView.RPC("set_material", RPCMode.AllBuffered, current_player.team);
+			current_player.networkView.RPC("set_material", RPCMode.All, current_player.team);
 			index = (index + 1) % players.Count;
 			current_player = players[index];
 			

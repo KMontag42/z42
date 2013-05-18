@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 
 public class Unit : MonoBehaviour
 {
@@ -17,7 +18,13 @@ public class Unit : MonoBehaviour
 	public int current_ap;
 	public int speed;
 	public UnitClass _class;
-	public NavMeshAgent nma;
+	
+	public Path path;
+	public Seeker seeker;
+	public int currentWaypoint;
+	//The max distance from the AI to a waypoint for it to continue to the next waypoint
+    public float nextWaypointDistance = 3;
+	public CharacterController controller;
 
 	public event EventHandler TurnOver;
 
@@ -68,14 +75,14 @@ public class Unit : MonoBehaviour
 //				e.apply_effect(this);		
 //		}
 		if (is_bleeding && bleed_timer > 0) {
-			networkView.RPC("take_damage", RPCMode.AllBuffered, bleed_dmg);
+			networkView.RPC("take_damage", RPCMode.All, bleed_dmg);
 			bleed_timer--;
 			if (bleed_timer == 0) {
 				is_bleeding = false;	
 				Destroy (transform.FindChild ("poison_effect(Clone)").gameObject);
 			}
 		}
-		
+		(GameObject.Find("3D Camera") as GameObject).GetComponent<iTweenFollow>().target = transform;
 		show_menu();
 	}
 	
@@ -88,6 +95,11 @@ public class Unit : MonoBehaviour
 			renderer.material = Resources.Load ("Materials/player_one_material") as Material;
 		else if (mat == 2)
 			renderer.material = Resources.Load ("Materials/player_two_material") as Material;
+	}
+	
+	[RPC]
+	public void request_set_current_ap(int _cur_ap) {
+		networkView.RPC("set_current_ap", RPCMode.All, _cur_ap);	
 	}
 	
 	[RPC]
@@ -119,7 +131,7 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void request_theif_spell_rpc(int boost_bool, int boost_per, string effect) {
 		// validation here
-		networkView.RPC("theif_spell_rpc", RPCMode.AllBuffered, boost_bool, boost_per, effect);
+		networkView.RPC("theif_spell_rpc", RPCMode.All, boost_bool, boost_per, effect);
 	}
 	
 	[RPC]
@@ -147,14 +159,13 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public void show_team_frame_rpc ()
 	{
-		//Camera.main.GetComponent<GUIOverlay>().showTeamFrame();
+		Camera.main.GetComponent<GUIOverlay>().showTeamFrame();
 	}
 	
 	[RPC]
 	public virtual void take_damage (int dmg)
 	{
 		if (sharing_dmg) {
-			print ("sharing damage");
 			sharing_dmg_with.networkView.RPC ("request_to_damage", RPCMode.Server, (dmg * (sharing_percent / 100)));
 			_class.hp -= (int)(dmg * (1 - (sharing_percent / 100)));
 			sharing_dmg = false;
@@ -169,20 +180,29 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void move_to (Vector3 pos, float t)
 	{		
-		nma.SetDestination(pos);
+//		NavMeshPath path = new NavMeshPath();
+//		if (seeker.CalculatePath(pos, path)) {
+//			
+//		}
+//		seeker.SetDestination(pos);
+//		seeker.Stop();
+		seeker.StartPath(transform.position, pos, OnPathComplete);
+		
+		networkView.RPC ("request_set_current_ap", RPCMode.Server, current_ap - 1);
 		
 		if (current_ap > 0) {
 			if (Network.player == owner)
-				show_menu ();
+				show_menu();
 		} else {
-			networkView.RPC ("OnTurnOver", RPCMode.Server);
+			if (Network.player == owner)
+				networkView.RPC ("OnTurnOver", RPCMode.Server);
 		}
 	}
 	
 	[RPC]
 	public virtual void request_protector_spell_rpc(int percent, string effect, int protect_bool, int target_id) {
 		//validate here
-		networkView.RPC("protector_spell_rpc", RPCMode.AllBuffered, percent, effect, protect_bool, target_id);
+		networkView.RPC("protector_spell_rpc", RPCMode.All, percent, effect, protect_bool, target_id);
 	}
 	
 	[RPC]
@@ -211,7 +231,7 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void request_healer_spell_rpc(string effect) {
 		//validate here
-		networkView.RPC("healer_spell_rpc", RPCMode.AllBuffered, effect);
+		networkView.RPC("healer_spell_rpc", RPCMode.All, effect);
 	}
 	
 	[RPC]
@@ -230,7 +250,7 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void request_gunner_spell_rpc(int damage, string effect, string target_effect, Vector3 caster_pos, int bleed_bool) {
 		//validate here
-		networkView.RPC("gunner_spell_rpc", RPCMode.AllBuffered, damage, effect, target_effect, caster_pos, bleed_bool);
+		networkView.RPC("gunner_spell_rpc", RPCMode.All, damage, effect, target_effect, caster_pos, bleed_bool);
 	}
 	
 	[RPC]
@@ -260,7 +280,7 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void request_to_spawn_prefab_on(string prefab_name) {
 		//validation here
-		networkView.RPC("spawn_prefab_on", RPCMode.AllBuffered, prefab_name);
+		networkView.RPC("spawn_prefab_on", RPCMode.All, prefab_name);
 	}
 	
 	[RPC]
@@ -273,13 +293,18 @@ public class Unit : MonoBehaviour
 	[RPC]
 	public virtual void submit_move(Vector3 pos, float t) {
 		// check for validation here
-		networkView.RPC("move_to", RPCMode.AllBuffered, pos, t);
+		networkView.RPC("move_to", RPCMode.All, pos, t);
 	}
 	
 	[RPC]
 	public virtual void request_to_damage(int dmg) {
 		// validation here
-		networkView.RPC("take_damage", RPCMode.AllBuffered, dmg);
+		networkView.RPC("take_damage", RPCMode.All, dmg);
+	}
+	
+	[RPC]
+	public virtual void set_view_id(NetworkViewID viewID) {
+		networkView.viewID = viewID;	
 	}
 	#endregion
 	
@@ -293,8 +318,10 @@ public class Unit : MonoBehaviour
 		_class = gameObject.GetComponent<UnitClass> ();
 		current_ap = 0;
 		bm = GameObject.Find ("BattleManager").GetComponent<BattleManager> ();
-		nma = GetComponent<NavMeshAgent>();
+		seeker = GetComponent<Seeker>();
 		name = name + " team: " + team;
+		
+		controller = GetComponent<CharacterController>();
 	}
 	
 	public void OnMouseDown ()
@@ -304,7 +331,11 @@ public class Unit : MonoBehaviour
 	// Update is called once per frame
 	public virtual void FixedUpdate ()
 	{		
-		
+		if (menu_showing) {
+			Camera camera_3d = Camera.allCameras [0];
+			Vector3 pos = camera_3d.WorldToScreenPoint (transform.position);
+			GUIOverlay.showTooltip (this, pos.x, Screen.height - pos.y);	
+		}
 	}
 	
 	public IEnumerator do_action (string _ind, ACTIONS action)
@@ -327,7 +358,7 @@ public class Unit : MonoBehaviour
 			break;
 		case ACTIONS.SPELL:
 			action_range = _class.spell_range;
-			indicator.transform.localScale = new Vector3 (action_range, action_range, action_range);
+			indicator.transform.localScale = new Vector3 (action_range / 3, action_range / 3, action_range / 3);
 			break;
 		default:
 			action_range = 5;
@@ -340,11 +371,13 @@ public class Unit : MonoBehaviour
 			mouse_input = Input.mousePosition;
 			
 			Plane playerPlane = new Plane (Vector3.up, transform.position);
+			//Ray ray = (GameObject.Find("3D Camera") as Camera).ScreenPointToRay(mouse_input);
 			Ray ray = Camera.allCameras [0].ScreenPointToRay (mouse_input);
+			RaycastHit hitinfo;
 			float hitdist = 0.0f;
 			
-			if (playerPlane.Raycast (ray, out hitdist)) {
-				target_destination = ray.GetPoint (hitdist);
+			if (Physics.Raycast (ray, out hitinfo, 1 << 8)) {
+				target_destination = hitinfo.point;
 				// the + .3 is to account for some isometric confusion.
 				if (Vector3.Distance (transform.position, target_destination) <= action_range + .3f) {
 					Quaternion targetRotation = Quaternion.LookRotation (target_destination - transform.position);
@@ -352,13 +385,13 @@ public class Unit : MonoBehaviour
 					Collider[] hitColliders;
 					switch (action) {
 					case ACTIONS.ATTACK:
-						hitColliders = Physics.OverlapSphere (target_destination, 1);
-						print (hitColliders.Length);
+						hitColliders = Physics.OverlapSphere (target_destination, 1, 1 << 8);
 						if (hitColliders.Length > 0) {
 							foreach (Collider q in hitColliders) {
 								// grabs first unit
 								if (q.GetComponent<Unit> () != null) {
-									target_unit = q.GetComponent<Unit> ();	
+									target_unit = q.GetComponent<Unit> ();
+									break;
 								}
 							}
 							if (target_unit != null) {
@@ -367,7 +400,6 @@ public class Unit : MonoBehaviour
 									action_success = true;
 								} else {
 									print ("failed can't attack self");
-									print (target_unit);
 									performed_action = true;
 									action_success = false;
 								}
@@ -379,20 +411,19 @@ public class Unit : MonoBehaviour
 						}
 						break;
 					case ACTIONS.SPELL:
-						hitColliders = Physics.OverlapSphere (target_destination, _class.spell.spell_area);
-						print (hitColliders.Length);
+						hitColliders = Physics.OverlapSphere (target_destination, _class.spell.spell_area, 1 << 8);
 						
 						switch (_class.spell.type) {
 						case Spell.TYPE.ALLY:
 							if (hitColliders.Length > 0) {
 								target_units.Clear ();
 								foreach (Collider q in hitColliders) {
-										
-									if (q.GetComponent<Unit> () != null && q.tag == tag) {
-										target_units.Add (q.GetComponent<Unit> ());
+									Unit q_unit = q.GetComponent<Unit>();
+									if (q_unit != null && q_unit.team == team) {
+										target_units.Add (q_unit);
 										action_success |= true;
 									} else {
-										print ("failed, not ally " + q);
+										print ("failed, not ally " + q_unit);
 										action_success |= false;
 									}
 								}	
@@ -400,21 +431,20 @@ public class Unit : MonoBehaviour
 							}
 							break;
 						case Spell.TYPE.ENEMY:
-							print (hitColliders.Length);
 							if (hitColliders.Length > 0) {
 								target_units.Clear ();
 								foreach (Collider q in hitColliders) {
-									print (q);	
-									if (q.GetComponent<Unit> () != null) {
-										if (q.tag != tag) {
-											target_units.Add (q.GetComponent<Unit> ());
+									Unit q_unit = q.GetComponent<Unit>();
+									if (q_unit != null) {
+										if (q_unit.team != team) {
+											target_units.Add (q_unit);
 											action_success |= true;
 										} else {
-											print ("failed, not	enemy " + q);
+											print ("failed, not	enemy " + q_unit);
 											action_success |= false;
 										}
 									} else {
-										print ("failed, not unit " + q);
+										print ("failed, not unit " + q_unit);
 										action_success |= false;
 									}
 								}
@@ -446,9 +476,6 @@ public class Unit : MonoBehaviour
 		
 		Destroy (indicator);
 		
-		if (action_success)
-			networkView.RPC ("set_current_ap", RPCMode.AllBuffered, current_ap - 1);
-		
 		menu_showing = false;
 		
 		if (action_success) {
@@ -464,11 +491,14 @@ public class Unit : MonoBehaviour
 				attack_target (target_unit);
 		
 				if (current_ap > 0) {
-					if (Network.player == owner)
+					if (Network.player == owner) {
+						networkView.RPC ("request_set_current_ap", RPCMode.Server, current_ap - 1);
 						show_menu ();
+					}
 					yield return null;
 				} else {
-					networkView.RPC ("OnTurnOver", RPCMode.Server);
+					if (Network.player == owner)
+						networkView.RPC ("OnTurnOver", RPCMode.Server);
 					yield return null;
 				}
 				break;
@@ -476,11 +506,14 @@ public class Unit : MonoBehaviour
 				cast_spell_on_target (ref target_units);
 		
 				if (current_ap > 0) {
-					if (Network.player == owner)
+					if (Network.player == owner) {
+						networkView.RPC ("request_set_current_ap", RPCMode.Server, current_ap - 1);
 						show_menu ();
+					}
 					yield return null;
 				} else {
-					networkView.RPC ("OnTurnOver", RPCMode.Server);
+					if (Network.player == owner)
+						networkView.RPC ("OnTurnOver", RPCMode.Server);
 					yield return null;
 				}
 				break;
@@ -496,6 +529,7 @@ public class Unit : MonoBehaviour
 	public IEnumerator get_input ()
 	{
 		bool input_recieved = false;
+		menu_showing = false;
 		
 		while (!input_recieved) {
 			Plane playerPlane = new Plane (Vector3.up, transform.position);
@@ -503,7 +537,7 @@ public class Unit : MonoBehaviour
 			float hitdist = 0.0f;
  
 			if (playerPlane.Raycast (ray, out hitdist)) {
-				transform.LookAt (ray.GetPoint (hitdist), Vector3.up);
+				//transform.LookAt (ray.GetPoint (hitdist), Vector3.up);
 				indicator.transform.LookAt (ray.GetPoint (hitdist), Vector3.up);
 				indicator.transform.Rotate (90, 0, 0);
 				if (Input.GetMouseButton (0)) {
@@ -518,9 +552,7 @@ public class Unit : MonoBehaviour
 	
 	public virtual void attack_target (Unit target)
 	{
-		print ("attacking targetting: " + target);
 		if (boost_dmg) {
-			print ("damage boosted");
 			target.networkView.RPC ("request_to_damage", RPCMode.Server, _class.damage * (boost_percent / 100));
 			target.networkView.RPC("request_to_spawn_prefab_on", RPCMode.Server, "Prefabs/Power Burst");
 			networkView.RPC("request_theif_spell_rpc", RPCMode.Server, 2, 0, "");
@@ -531,7 +563,6 @@ public class Unit : MonoBehaviour
 	public virtual void cast_spell_on_target (ref List<Unit> u)
 	{
 		foreach (Unit _u in u) {
-			print ("casting spell on target: " + _u);
 			_u.receive_spell (_class.spell, this);
 		}
 		
@@ -540,7 +571,6 @@ public class Unit : MonoBehaviour
 	
 	public virtual void receive_spell (Spell s, Unit caster)
 	{
-		print ("Receiving spell " + s + " from: " + caster);
 		s.perform_spell (caster, this);	
 	}
 	
@@ -553,5 +583,13 @@ public class Unit : MonoBehaviour
 			menu_showing = true;
 		}
 	}
+	
+	public void OnPathComplete (Path p) {
+        Debug.Log ("Yey, we got a path back. Did it have an error? "+p.error);
+        if (!p.error) {
+            path = p;
+			currentWaypoint = 0;
+        }
+    }
     #endregion
 }

@@ -5,7 +5,7 @@ public class TheifSpell : Spell
 {
 	public TheifSpell()
 	{
-		effect_damage = 120;
+		effect_damage = 200;
 		spell_range = 2;
 		spell_area = 1;
 		type = Spell.TYPE.SELF;

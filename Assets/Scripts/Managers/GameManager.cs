@@ -21,38 +21,52 @@ public class GameManager : MonoBehaviour {
 	
 	public int lastLevelPrefix = 0;
 	
-	BattleManager bm;
+	public int times_loaded_battle = 0;
+	public int times_loaded_select_class = 0;
 	
-	public void spawn_player(string unit, Vector3 spawn_position, int player, NetworkPlayer network_player, int _index)
+	public BattleManager bm;
+	
+	[RPC]
+	public void spawn_player(string unit, Vector3 spawn_position, int player, NetworkPlayer network_player)
 	{
+		if (Network.isClient)
+			return;
 		if (Network.isServer) {
-			GameObject new_player_transform = Network.Instantiate(Resources.Load(unit),spawn_position,Quaternion.identity, player + 1) as GameObject;
+			print ("spawn_player from: " + network_player);
+			GameObject new_player_transform = Network.Instantiate(Resources.Load(unit),spawn_position,Quaternion.identity, player) as GameObject;
 			Unit new_player = new_player_transform.GetComponent<Unit>();
-			new_player.networkView.RPC ("set_owner", RPCMode.AllBuffered, network_player);
-			new_player.networkView.RPC ("set_material", RPCMode.AllBuffered, player + 1);
-			new_player.networkView.RPC ("set_team", RPCMode.AllBuffered, player + 1);
-			if (player == 0) {
+			//new_player.networkView.RPC ("set_view_id", RPCMode.All, viewID);
+			new_player.networkView.RPC ("set_owner", RPCMode.All, network_player);
+			new_player.networkView.RPC ("set_material", RPCMode.All, player);
+			new_player.networkView.RPC ("set_team", RPCMode.All, player);
+			if (player == 1) {
 				new_player.tag = "team_1";
-			} else {
+			} else if (player == 2) {
 				new_player.tag = "team_2";	
 			}
-			//players.Add (new_player);
 		}
 	}
 	
 	[RPC]
 	public void start_battle()
 	{
+		networkView.RPC("set_battle_manager", RPCMode.All);
+		//SendMessage("set_all_players", SendMessageOptions.DontRequireReceiver);
+		players.Sort (
+			delegate(Unit x, Unit y) {
+				if (x == null) {
+					if (y == null) { return 0;}
+					return -1;
+				}
+				if (y == null) {return 0;}
+				return y._class.speed.CompareTo(x._class.speed);
+			}
+		);
 		bm.init(players);
 	}
 	
 	[RPC]
 	public void set_all_players() {
-//		foreach (Unit u in GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[]) {
-//			if (u != null) {
-//				players.Add(u);
-//			}
-//		}
 		Unit[] gos = GameObject.FindSceneObjectsOfType(typeof(Unit)) as Unit[];
 		for (int i = 0; i < gos.Length; i++) {
 			players.Add (gos[i]);
@@ -61,10 +75,10 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	[RPC]
-	public void set_player_id(string np) {
-		if (player_one_id == "--")
+	public void set_player_id(string np, int player) {
+		if (player == 1)
 			player_one_id = np;
-		else if (player_two_id == "--")
+		else if (player == 2)
 			player_two_id = np;
 		else
 			print ("failed set_player_id");
@@ -106,6 +120,11 @@ public class GameManager : MonoBehaviour {
 		team_materials.Add(Resources.Load("Materials/player_two_material") as Material);
 	}
 	
+	[RPC]
+	public void set_battle_manager() {
+		bm = GameObject.Find("BattleManager").GetComponent("BattleManager") as BattleManager;	
+	}
+	
 	public void print_players()
 	{
 		foreach (Unit u in players)
@@ -133,49 +152,75 @@ public class GameManager : MonoBehaviour {
 			if (Network.isServer) {
 				if (GUILayout.Button ("Start Battle"))
 				{
-					networkView.RPC("start_battle", RPCMode.AllBuffered);
+					networkView.RPC("start_battle", RPCMode.All);
 				}
-					
-				GUILayout.Label("Player one: "+Network.connections[0]);
-				GUILayout.Label("Player two: "+Network.connections[1]);
+				
+				foreach (NetworkPlayer np in Network.connections) {
+					GUILayout.Label("player: " + np + " guid: " + np.guid);	
+				}
 			}
-			GUILayout.Label("Player guid: "+Network.player.guid);
-			GUILayout.Label("Length of Players: "+players.Count);
 		}
-	}
-	
-	[RPC]
-	void OnLevelWasLoadedRPC() {
-		if (Network.isServer)
-			OnLevelWasLoaded();	
 	}
 	
 	void OnLevelWasLoaded() {
+		if (Network.isClient)
+			return;
+		
+		if (Network.isServer) {
+			print ("server doing levelwasloaded");
+			//networkView.RPC("OnNetworkLoadedLevel", RPCMode.All);
+			OnNetworkLoadedLevel();
+			//SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);
+		}	
+	}
+	
+	//[RPC]
+	void OnNetworkLoadedLevel() {
 		if (Application.loadedLevelName == "battle_test") {
+			print ("times loaded battle: " + times_loaded_battle);
+			//if (times_loaded_battle == 0) {
 			
 			Transform spawn_one = GameObject.Find("spawn_one").transform;
 			Transform spawn_two = GameObject.Find("spawn_two").transform;
-			bm = GameObject.Find("BattleManager").GetComponent("BattleManager") as BattleManager;
 			
-			if (Network.isServer) {
-				networkView.RPC("set_team_materials", RPCMode.AllBuffered);
-				
+			networkView.RPC("set_team_materials", RPCMode.All);
+			if (Network.isServer && times_loaded_battle == 0) {
 				for(int i = 0; i < player_one_strings.Count; i++){
-					spawn_player(player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 0, Network.connections[0], i);
+					//NetworkViewID viewID = Network.AllocateViewID();
+					//networkView.RPC("spawn_player", RPCMode.All, player_one_strings[i], new Vector3(-9 + i * 5, spawn_one.position.y, spawn_one.position.z), 1, Network.connections[0]);
+					spawn_player(player_one_strings[i], new Vector3(spawn_one.position.x + i * 10, spawn_one.position.y + 3, spawn_one.position.z), 1, Network.connections[0]);
 				}
 				
 				for(int i = 0; i < player_two_strings.Count; i++){
-					spawn_player(player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 1, Network.connections[1], i+player_one_strings.Count);
+					//NetworkViewID viewID = Network.AllocateViewID();
+					//networkView.RPC("spawn_player", RPCMode.All, player_two_strings[i], new Vector3(-9 + i * 5, spawn_two.position.y, spawn_two.position.z), 2, Network.connections[1]);
+					spawn_player(player_two_strings[i], new Vector3(spawn_one.position.x + i * 10, spawn_two.position.y + 3, spawn_two.position.z), 2, Network.connections[1]);
 				}
 				
-				networkView.RPC("set_all_players", RPCMode.AllBuffered);
+				times_loaded_battle++;
+			}
+			networkView.RPC("set_all_players", RPCMode.All);
 				
+				//
+			//}
+		}
+		
+		if (Application.loadedLevelName == "select_class_scene") {
+			if (times_loaded_select_class == 0) {
+				networkView.RPC("set_player_id", RPCMode.All, Network.connections[0].guid, 1);
+				networkView.RPC("set_player", RPCMode.All, Network.connections[0], 1);
+				networkView.RPC("set_player_id", RPCMode.All, Network.connections[1].guid, 2);
+				networkView.RPC("set_player", RPCMode.All, Network.connections[1], 2);
+				
+				times_loaded_select_class++;
 			}
 		}
+		
+		
 	}
 	
 	[RPC]
-	void LoadLevel (string level, int levelPrefix)
+	void LoadLevel (string level, int levelPrefix, NetworkMessageInfo info)
 	{
 		lastLevelPrefix = levelPrefix;
 	
@@ -191,13 +236,20 @@ public class GameManager : MonoBehaviour {
 		// This will prevent old updates from clients leaking into a newly created scene.
 		Network.SetLevelPrefix(levelPrefix);
 		Application.LoadLevel(level);
-
+		
 		// Allow receiving data again
 		Network.isMessageQueueRunning = true;
 		// Now the level has been loaded and we can start sending out data to clients
 		Network.SetSendingEnabled(0, true);
-
-		if (Network.isServer)
-			networkView.RPC("OnLevelWasLoadedRPC", RPCMode.Server);	
+		
+		print ("on load level: "+ level + " from: "+ info.sender.guid);
+		//SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);
+//		if (Application.isLoadingLevel == false)
+//			if (Network.isServer) {
+//				print ("server doing this shit " + Network.isServer + " from: " + info.sender.guid);
+//				//networkView.RPC("OnNetworkLoadedLevel", RPCMode.All);
+//				OnNetworkLoadedLevel();
+//				//SendMessage("OnNetworkLoadedLevel", SendMessageOptions.DontRequireReceiver);
+//			}
 	}
 }

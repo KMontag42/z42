@@ -8,7 +8,7 @@ public class ProtectorSpell : Spell
 	{
 		effect_damage = 20;
 		spell_range = 10;
-		spell_area = 1;
+		spell_area = 3;
 		type = Spell.TYPE.ALLY;
 		effect = "protector_effect";
 	}
